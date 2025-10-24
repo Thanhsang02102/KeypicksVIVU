@@ -1,0 +1,52 @@
+{
+    "routes": [
+        {
+            "id": "SGN-HAN",
+            "from": "SGN",
+            "to": "HAN",
+            "distance": 1130,
+            "duration": "2h 00m",
+            "popular": true
+        },
+        {
+            "id": "HAN-SGN",
+            "from": "HAN",
+            "to": "SGN",
+            "distance": 1130,
+            "duration": "2h 00m",
+            "popular": true
+        },
+        {
+            "id": "SGN-DAD",
+            "from": "SGN",
+            "to": "DAD",
+            "distance": 600,
+            "duration": "1h 30m",
+            "popular": true
+        },
+        {
+            "id": "DAD-SGN",
+            "from": "DAD",
+            "to": "SGN",
+            "distance": 600,
+            "duration": "1h 30m",
+            "popular": true
+        },
+        {
+            "id": "SGN-CXR",
+            "from": "SGN",
+            "to": "CXR",
+            "distance": 400,
+            "duration": "1h 15m",
+            "popular": false
+        },
+        {
+            "id": "SGN-PQC",
+            "from": "SGN",
+            "to": "PQC",
+            "distance": 300,
+            "duration": "1h 00m",
+            "popular": true
+        }
+    ]
+}

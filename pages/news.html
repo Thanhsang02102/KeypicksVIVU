@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin tức - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../image/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../image/logo.png" alt="Logo" class="h-12">
+                        <span class="ml-4 text-2xl font-bold vna-text-primary">KeyPicks VIVU</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html" class="text-gray-600 hover:text-blue-700">Trang chủ</a>
+                    <a href="flight-schedule.html" class="text-gray-600 hover:text-blue-700">Lịch bay</a>
+                    <a href="promotions.html" class="text-gray-600 hover:text-blue-700">Khuyến mãi</a>
+                    <a href="services.html" class="text-gray-600 hover:text-blue-700">Dịch vụ</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-700">Đăng nhập</a>
+                    <a href="register.html" class="vna-primary text-white px-4 py-2 rounded">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-10">
+        <div class="bg-white p-6 rounded-lg shadow-xl">
+            <h1 class="text-3xl font-bold mb-6 vna-text-primary">Tin tức du lịch</h1>
+
+            <!-- Featured News -->
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="bg-white text-blue-500 px-3 py-1 rounded-full text-sm font-semibold">Tin nổi
+                            bật</span>
+                        <h2 class="text-2xl font-bold mt-4 mb-2">Vietnam Airlines mở thêm 5 tuyến bay mới</h2>
+                        <p class="text-lg opacity-90 mb-4">Mở rộng mạng lưới bay đến các điểm đến hấp dẫn trong nước và
+                            quốc tế</p>
+                        <p class="text-sm opacity-75">15/12/2024</p>
+                    </div>
+                    <div class="hidden md:block">
+                        <img src="https://via.placeholder.com/300x200/ffffff/000000?text=News" alt="News"
+                            class="rounded-lg">
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- News 1 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://via.placeholder.com/400x250/0B4F9A/ffffff?text=News+1" alt="News 1"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Du
+                            lịch</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">10 điểm đến hấp dẫn nhất 2024</h3>
+                        <p class="text-gray-600 text-sm mb-4">Khám phá những điểm đến tuyệt vời nhất trong năm 2024</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">14/12/2024</span>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 2 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://via.placeholder.com/400x250/FF6B35/ffffff?text=News+2" alt="News 2"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Khuyến
+                            mãi</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">Giảm giá 50% vé máy bay mùa đông</h3>
+                        <p class="text-gray-600 text-sm mb-4">Cơ hội vàng để du lịch với giá cực kỳ hấp dẫn</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">13/12/2024</span>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 3 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://via.placeholder.com/400x250/00A651/ffffff?text=News+3" alt="News 3"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">Công
+                            nghệ</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">Ứng dụng AI trong du lịch</h3>
+                        <p class="text-gray-600 text-sm mb-4">Công nghệ AI đang thay đổi cách chúng ta du lịch</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">12/12/2024</span>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 4 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://via.placeholder.com/400x250/FFC107/000000?text=News+4" alt="News 4"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">An
+                            toàn</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">Hướng dẫn du lịch an toàn</h3>
+                        <p class="text-gray-600 text-sm mb-4">Những lưu ý quan trọng khi du lịch trong mùa dịch</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">11/12/2024</span>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 5 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://via.placeholder.com/400x250/17A2B8/ffffff?text=News+5" alt="News 5"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-semibold">Văn
+                            hóa</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">Lễ hội truyền thống Việt Nam</h3>
+                        <p class="text-gray-600 text-sm mb-4">Khám phá những lễ hội độc đáo của Việt Nam</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">10/12/2024</span>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 6 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://via.placeholder.com/400x250/6F42C1/ffffff?text=News+6" alt="News 6"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-semibold">Ẩm
+                            thực</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">Top 10 món ăn Việt Nam nổi tiếng</h3>
+                        <p class="text-gray-600 text-sm mb-4">Những món ăn không thể bỏ qua khi đến Việt Nam</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">09/12/2024</span>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-50 p-8 rounded-lg text-center">
+                <h3 class="text-2xl font-bold mb-4">Đăng ký nhận tin tức</h3>
+                <p class="text-gray-600 mb-6">Nhận thông tin về tin tức du lịch mới nhất</p>
+                <form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Nhập email của bạn"
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:ring-vna-primary focus:border-vna-primary">
+                    <button type="submit"
+                        class="vna-primary text-white px-6 py-3 rounded-md hover:bg-blue-800 transition-colors">
+                        Đăng ký
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+</body>
+
+</html>

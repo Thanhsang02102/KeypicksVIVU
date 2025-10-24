@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé của tôi - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../image/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../image/logo.png" alt="Logo" class="h-12">
+                        <span class="ml-4 text-2xl font-bold vna-text-primary">KeyPicks VIVU</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html" class="text-gray-600 hover:text-blue-700">Trang chủ</a>
+                    <a href="flight-schedule.html" class="text-gray-600 hover:text-blue-700">Lịch bay</a>
+                    <a href="promotions.html" class="text-gray-600 hover:text-blue-700">Khuyến mãi</a>
+                    <a href="services.html" class="text-gray-600 hover:text-blue-700">Dịch vụ</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="profile.html" class="text-gray-600 hover:text-blue-700">Tài khoản</a>
+                    <a href="login.html" class="vna-primary text-white px-4 py-2 rounded">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-10">
+        <div class="bg-white p-6 rounded-lg shadow-xl">
+            <h1 class="text-3xl font-bold mb-6 vna-text-primary">Đặt vé của tôi</h1>
+
+            <!-- Filter Tabs -->
+            <div class="flex border-b mb-6">
+                <button class="py-2 px-4 text-sm font-semibold border-b-2 vna-text-primary border-vna-primary">Tất
+                    cả</button>
+                <button class="py-2 px-4 text-sm font-semibold text-gray-500 hover:text-gray-700">Đang chờ</button>
+                <button class="py-2 px-4 text-sm font-semibold text-gray-500 hover:text-gray-700">Đã xác nhận</button>
+                <button class="py-2 px-4 text-sm font-semibold text-gray-500 hover:text-gray-700">Đã hủy</button>
+            </div>
+
+            <!-- Bookings List -->
+            <div class="space-y-6">
+                <!-- Booking 1 -->
+                <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-blue-600">VN123456</h3>
+                            <p class="text-sm text-gray-600">Đặt ngày: 15/12/2024</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Đã xác
+                            nhận</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-plane text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">SGN → HAN</h4>
+                                <p class="text-sm text-gray-600">Vietnam Airlines VN 7120</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-calendar text-green-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">15/12/2024</h4>
+                                <p class="text-sm text-gray-600">08:00 - 10:00</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">1 hành khách</h4>
+                                <p class="text-sm text-gray-600">Nguyễn Văn A</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg font-bold text-red-600">2,100,000₫</div>
+                        <div class="flex space-x-2">
+                            <button
+                                class="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-download mr-1"></i>Tải vé
+                            </button>
+                            <button
+                                class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-edit mr-1"></i>Chỉnh sửa
+                            </button>
+                            <button
+                                class="bg-red-500 text-white px-4 py-2 rounded-md text-sm hover:bg-red-600 transition-colors">
+                                <i class="fas fa-times mr-1"></i>Hủy vé
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking 2 -->
+                <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-blue-600">VN123457</h3>
+                            <p class="text-sm text-gray-600">Đặt ngày: 14/12/2024</p>
+                        </div>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">Đang
+                            chờ</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-plane text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">HAN → SGN</h4>
+                                <p class="text-sm text-gray-600">VietJet Air VJ 123</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-calendar text-green-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">20/12/2024</h4>
+                                <p class="text-sm text-gray-600">14:30 - 16:30</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">2 hành khách</h4>
+                                <p class="text-sm text-gray-600">Nguyễn Văn A, Trần Thị B</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg font-bold text-red-600">3,200,000₫</div>
+                        <div class="flex space-x-2">
+                            <button
+                                class="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-credit-card mr-1"></i>Thanh toán
+                            </button>
+                            <button
+                                class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-edit mr-1"></i>Chỉnh sửa
+                            </button>
+                            <button
+                                class="bg-red-500 text-white px-4 py-2 rounded-md text-sm hover:bg-red-600 transition-colors">
+                                <i class="fas fa-times mr-1"></i>Hủy vé
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking 3 -->
+                <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-blue-600">VN123458</h3>
+                            <p class="text-sm text-gray-600">Đặt ngày: 13/12/2024</p>
+                        </div>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">Đã hủy</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-plane text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">SGN → DAD</h4>
+                                <p class="text-sm text-gray-600">Bamboo Airways QH 456</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-calendar text-green-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">18/12/2024</h4>
+                                <p class="text-sm text-gray-600">20:15 - 22:15</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">1 hành khách</h4>
+                                <p class="text-sm text-gray-600">Nguyễn Văn A</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg font-bold text-gray-500">1,800,000₫</div>
+                        <div class="flex space-x-2">
+                            <button
+                                class="bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600 transition-colors">
+                                <i class="fas fa-redo mr-1"></i>Đặt lại
+                            </button>
+                            <button
+                                class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-info mr-1"></i>Chi tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center mt-8">
+                <nav class="flex space-x-2">
+                    <button
+                        class="px-3 py-2 text-sm bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300">Trước</button>
+                    <button class="px-3 py-2 text-sm bg-blue-500 text-white rounded-md">1</button>
+                    <button class="px-3 py-2 text-sm bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300">2</button>
+                    <button class="px-3 py-2 text-sm bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300">3</button>
+                    <button
+                        class="px-3 py-2 text-sm bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300">Sau</button>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/booking.js"></script>
+</body>
+
+</html>

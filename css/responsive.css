@@ -1,0 +1,352 @@
+/* Responsive CSS */
+/* Mobile First Approach */
+
+/* Extra Small devices (phones, 576px and down) */
+@media (max-width: 575.98px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .search-form {
+        padding: 20px;
+        margin-top: -30px;
+    }
+
+    .search-tabs {
+        flex-direction: column;
+    }
+
+    .search-tab {
+        padding: 12px 20px;
+        text-align: center;
+    }
+
+    .flight-card {
+        padding: 20px;
+    }
+
+    .flight-route {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .duration {
+        order: -1;
+    }
+
+    .duration::before {
+        display: none;
+    }
+
+    .booking-container {
+        padding: 10px;
+    }
+
+    .booking-summary {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .passenger-form {
+        padding: 20px;
+    }
+
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-details-info {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-actions {
+        flex-direction: column;
+    }
+
+    .auth-card {
+        padding: 30px 20px;
+    }
+
+    .auth-title {
+        font-size: 24px;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .search-form {
+        padding: 25px;
+    }
+
+    .flight-route {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .booking-details-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .search-form {
+        padding: 30px;
+    }
+
+    .flight-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .flight-route {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .booking-details-info {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .payment-methods {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .search-form {
+        padding: 30px;
+    }
+
+    .flight-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .booking-details-info {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .payment-methods {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+    }
+
+    .search-form {
+        padding: 40px;
+    }
+
+    .flight-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .booking-details-info {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .payment-methods {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Navigation Responsive */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+}
+
+@media (min-width: 992px) {
+    .mobile-menu {
+        display: none;
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+}
+
+/* Form Responsive */
+@media (max-width: 767.98px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-col {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Table Responsive */
+@media (max-width: 767.98px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        min-width: 600px;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+    }
+}
+
+/* Modal Responsive */
+@media (max-width: 575.98px) {
+    .modal-dialog {
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .modal-header {
+        padding: 15px;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .modal-footer {
+        padding: 10px 15px;
+        flex-direction: column;
+    }
+
+    .modal-footer .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Card Responsive */
+@media (max-width: 767.98px) {
+    .card-deck {
+        flex-direction: column;
+    }
+
+    .card-deck .card {
+        margin-bottom: 20px;
+    }
+
+    .card-columns {
+        column-count: 1;
+    }
+}
+
+/* Grid Responsive */
+@media (max-width: 575.98px) {
+    .row {
+        margin: 0;
+    }
+
+    .col,
+    [class*="col-"] {
+        padding: 0 10px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Utility Classes for Responsive */
+.d-mobile-none {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .d-mobile-none {
+        display: block;
+    }
+}
+
+.d-desktop-none {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .d-desktop-none {
+        display: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+
+    .navbar,
+    .footer,
+    .btn,
+    .modal,
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+
+    .text-primary {
+        color: #000 !important;
+    }
+
+    .bg-primary {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+}
