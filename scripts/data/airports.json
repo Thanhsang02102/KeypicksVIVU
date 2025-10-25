@@ -1,0 +1,75 @@
+{
+    "airports": [
+        {
+            "code": "SGN",
+            "name": "TP. Hồ Chí Minh (SGN)",
+            "city": "TP. Hồ Chí Minh",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "HAN",
+            "name": "Hà Nội (HAN)",
+            "city": "Hà Nội",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "DAD",
+            "name": "Đà Nẵng (DAD)",
+            "city": "Đà Nẵng",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "CXR",
+            "name": "Nha Trang (CXR)",
+            "city": "Nha Trang",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "PQC",
+            "name": "Phú Quốc (PQC)",
+            "city": "Phú Quốc",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "HUI",
+            "name": "Huế (HUI)",
+            "city": "Huế",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "VCA",
+            "name": "Cần Thơ (VCA)",
+            "city": "Cần Thơ",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "DLI",
+            "name": "Đà Lạt (DLI)",
+            "city": "Đà Lạt",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "VDO",
+            "name": "Vân Đồn (VDO)",
+            "city": "Vân Đồn",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        },
+        {
+            "code": "HPH",
+            "name": "Hải Phòng (HPH)",
+            "city": "Hải Phòng",
+            "country": "Vietnam",
+            "timezone": "Asia/Ho_Chi_Minh"
+        }
+    ]
+}
+

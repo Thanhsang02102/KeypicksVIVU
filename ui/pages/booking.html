@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../img/logo.png" alt="Logo" class="h-12">
+                        <span class="ml-4 text-2xl font-bold vna-text-primary">KeyPicks VIVU</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Thông tin chuyến bay -->
+            <div class="lg:col-span-2">
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-bold mb-4 vna-text-primary">Thông tin chuyến bay</h2>
+
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/40x30/0B4F9A/white?text=VN" alt="Vietnam Airlines"
+                                    class="mr-3">
+                                <div>
+                                    <h3 class="font-bold">Vietnam Airlines</h3>
+                                    <p class="text-sm text-gray-600">VN 7120</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Bay thẳng</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">08:00</p>
+                                <p class="text-sm text-gray-600">SGN</p>
+                                <p class="text-xs text-gray-500">15/12/2024</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600">2h 00m</p>
+                                <div class="border-t border-gray-300 my-2"></div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">10:00</p>
+                                <p class="text-sm text-gray-600">HAN</p>
+                                <p class="text-xs text-gray-500">15/12/2024</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin hành khách -->
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-bold mb-4 vna-text-primary">Thông tin hành khách</h2>
+
+                    <form id="passengerForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Họ và tên đệm</label>
+                                <input type="text" required
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tên</label>
+                                <input type="text" required
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Giới tính</label>
+                                <select
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                                    <option>Nam</option>
+                                    <option>Nữ</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
+                                <input type="date" required
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                            <input type="tel" required
+                                class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" required
+                                class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Thông tin thanh toán -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 vna-text-primary">Phương thức thanh toán</h2>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="payment" id="creditCard" class="form-radio text-vna-primary"
+                                checked>
+                            <label for="creditCard" class="ml-3 flex items-center">
+                                <i class="fas fa-credit-card mr-2"></i>
+                                Thẻ tín dụng/ghi nợ
+                            </label>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input type="radio" name="payment" id="bankTransfer" class="form-radio text-vna-primary">
+                            <label for="bankTransfer" class="ml-3 flex items-center">
+                                <i class="fas fa-university mr-2"></i>
+                                Chuyển khoản ngân hàng
+                            </label>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input type="radio" name="payment" id="momo" class="form-radio text-vna-primary">
+                            <label for="momo" class="ml-3 flex items-center">
+                                <i class="fas fa-mobile-alt mr-2"></i>
+                                Ví điện tử MoMo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tóm tắt đặt vé -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-lg shadow-lg sticky top-4">
+                    <h3 class="text-lg font-bold mb-4 vna-text-primary">Tóm tắt đặt vé</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span>Vé người lớn x1</span>
+                            <span>1,850,000₫</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Thuế và phí</span>
+                            <span>200,000₫</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Phí dịch vụ</span>
+                            <span>50,000₫</span>
+                        </div>
+                        <hr class="border-gray-300">
+                        <div class="flex justify-between text-lg font-bold">
+                            <span>Tổng cộng</span>
+                            <span class="text-red-600">2,100,000₫</span>
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full vna-primary text-white py-3 rounded-md font-semibold mt-6 hover:bg-blue-800 transition-colors"
+                        onclick="confirmBooking()">
+                        Xác nhận đặt vé
+                    </button>
+
+                    <p class="text-xs text-gray-500 mt-4">
+                        Bằng việc đặt vé, bạn đồng ý với
+                        <a href="#" class="vna-text-primary hover:underline">Điều khoản và Điều kiện</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmBooking() {
+            if (confirm('Bạn có chắc chắn muốn đặt vé này?')) {
+                alert('Đặt vé thành công! Mã đặt vé: VN' + Math.random().toString(36).substr(2, 6).toUpperCase());
+                window.location.href = 'booking-confirmation.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

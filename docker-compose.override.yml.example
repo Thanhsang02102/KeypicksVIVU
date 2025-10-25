@@ -1,0 +1,37 @@
+# docker-compose.override.yml.example
+# 
+# Copy this file to docker-compose.override.yml to customize your local development environment
+# This file is ignored by git, so you can make local changes without affecting the team
+#
+# Usage: cp docker-compose.override.yml.example docker-compose.override.yml
+
+services:
+  app:
+    # Override port if 3000 is already in use
+    ports:
+      - "3001:3000"
+    
+    # Add additional environment variables
+    environment:
+      DEBUG: "true"
+      LOG_LEVEL: "debug"
+    
+    # Mount additional volumes
+    # volumes:
+    #   - ./custom-config:/app/config
+  
+  mongodb:
+    # Override MongoDB port if needed
+    # ports:
+    #   - "27018:27017"
+    
+    # Add custom MongoDB configuration
+    # command: mongod --auth --slowms 100
+    pass
+
+  # Add additional services
+  # redis:
+  #   image: redis:alpine
+  #   ports:
+  #     - "6379:6379"
+

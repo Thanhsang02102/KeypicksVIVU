@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../img/icons/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center py-8">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <div class="text-center mb-8">
+            <img src="../img/icons/logo.png" alt="Logo" class="h-16 mx-auto mb-4">
+            <h1 class="text-2xl font-bold vna-text-primary">Đăng ký tài khoản</h1>
+            <p class="text-gray-600">Tạo tài khoản để trải nghiệm tốt nhất</p>
+        </div>
+
+        <form id="registerForm" class="space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="firstName" class="block text-sm font-medium text-gray-700">Họ</label>
+                    <input type="text" id="firstName" name="firstName" required
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-vna-primary focus:border-vna-primary">
+                </div>
+                <div>
+                    <label for="lastName" class="block text-sm font-medium text-gray-700">Tên</label>
+                    <input type="text" id="lastName" name="lastName" required
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-vna-primary focus:border-vna-primary">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" required
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-vna-primary focus:border-vna-primary">
+            </div>
+
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                <input type="tel" id="phone" name="phone" required
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-vna-primary focus:border-vna-primary">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                <input type="password" id="password" name="password" required
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-vna-primary focus:border-vna-primary">
+            </div>
+
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-vna-primary focus:border-vna-primary">
+            </div>
+
+            <div class="flex items-center">
+                <input type="checkbox" id="agreeTerms" required class="form-checkbox text-vna-primary">
+                <label for="agreeTerms" class="ml-2 text-sm text-gray-600">
+                    Tôi đồng ý với
+                    <a href="#" class="vna-text-primary hover:underline">Điều khoản sử dụng</a>
+                </label>
+            </div>
+
+            <button type="submit"
+                class="w-full vna-primary text-white py-3 rounded-md font-semibold hover:bg-blue-800 transition-colors">
+                Đăng ký
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-gray-600">Đã có tài khoản?
+                <a href="login.html" class="vna-text-primary hover:underline">Đăng nhập</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+
+            alert('Đăng ký thành công!');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+
+</html>

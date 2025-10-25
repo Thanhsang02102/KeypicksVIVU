@@ -1,0 +1,26 @@
+# Development Dockerfile
+FROM node:24-alpine
+
+# Set timezone to UTC
+ENV TZ=UTC
+RUN apk add --no-cache tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy application code
+COPY . .
+
+ENV NODE_ENV=development
+ENV PORT=3000
+
+EXPOSE 3000
+
+# Use nodemon for hot reloading
+CMD ["npm", "run", "dev"]
+

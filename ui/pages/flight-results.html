@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả tìm kiếm - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+
+        .flight-card {
+            transition: transform 0.2s;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header giống trang chủ -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../img/logo.png" alt="Logo" class="h-12">
+                        <span class="ml-4 text-2xl font-bold vna-text-primary">KeyPicks VIVU</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-700">Đăng nhập</a>
+                    <a href="register.html" class="vna-primary text-white px-4 py-2 rounded">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-10">
+        <!-- Thông tin tìm kiếm -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+            <h2 class="text-xl font-bold mb-4 vna-text-primary">Kết quả tìm kiếm</h2>
+            <div class="flex flex-wrap gap-4 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded">SGN → HAN</span>
+                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded">15/12/2024</span>
+                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded">1 người lớn</span>
+                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded">Phổ thông</span>
+            </div>
+        </div>
+
+        <!-- Bộ lọc -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+            <h3 class="text-lg font-semibold mb-4">Bộ lọc</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Giá</label>
+                    <select class="w-full border border-gray-300 rounded-md p-2">
+                        <option>Tất cả</option>
+                        <option>Dưới 2 triệu</option>
+                        <option>2-5 triệu</option>
+                        <option>Trên 5 triệu</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Thời gian</label>
+                    <select class="w-full border border-gray-300 rounded-md p-2">
+                        <option>Tất cả</option>
+                        <option>Sáng (6h-12h)</option>
+                        <option>Chiều (12h-18h)</option>
+                        <option>Tối (18h-24h)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Hãng bay</label>
+                    <select class="w-full border border-gray-300 rounded-md p-2">
+                        <option>Tất cả</option>
+                        <option>Vietnam Airlines</option>
+                        <option>VietJet Air</option>
+                        <option>Bamboo Airways</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Hạng ghế</label>
+                    <select class="w-full border border-gray-300 rounded-md p-2">
+                        <option>Tất cả</option>
+                        <option>Phổ thông</option>
+                        <option>Phổ thông đặc biệt</option>
+                        <option>Thương gia</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách chuyến bay -->
+        <div class="space-y-4">
+            <!-- Chuyến bay 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg flight-card">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-4">
+                            <img src="https://via.placeholder.com/60x40/0B4F9A/white?text=VN" alt="Vietnam Airlines"
+                                class="mr-4">
+                            <div>
+                                <h3 class="font-bold text-lg">Vietnam Airlines</h3>
+                                <p class="text-sm text-gray-600">VN 7120</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">08:00</p>
+                                <p class="text-sm text-gray-600">SGN</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600">2h 00m</p>
+                                <div class="border-t border-gray-300 my-2"></div>
+                                <p class="text-sm text-gray-600">Bay thẳng</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">10:00</p>
+                                <p class="text-sm text-gray-600">HAN</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right ml-6">
+                        <p class="text-3xl font-bold text-red-600">1,850,000₫</p>
+                        <p class="text-sm text-gray-600">Giá mỗi người</p>
+                        <button
+                            class="vna-primary text-white px-6 py-2 rounded-md mt-4 hover:bg-blue-800 transition-colors">
+                            Chọn vé
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chuyến bay 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg flight-card">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-4">
+                            <img src="https://via.placeholder.com/60x40/FF6B35/white?text=VJ" alt="VietJet Air"
+                                class="mr-4">
+                            <div>
+                                <h3 class="font-bold text-lg">VietJet Air</h3>
+                                <p class="text-sm text-gray-600">VJ 123</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">14:30</p>
+                                <p class="text-sm text-gray-600">SGN</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600">2h 00m</p>
+                                <div class="border-t border-gray-300 my-2"></div>
+                                <p class="text-sm text-gray-600">Bay thẳng</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">16:30</p>
+                                <p class="text-sm text-gray-600">HAN</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right ml-6">
+                        <p class="text-3xl font-bold text-red-600">1,650,000₫</p>
+                        <p class="text-sm text-gray-600">Giá mỗi người</p>
+                        <button
+                            class="vna-primary text-white px-6 py-2 rounded-md mt-4 hover:bg-blue-800 transition-colors">
+                            Chọn vé
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chuyến bay 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg flight-card">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-4">
+                            <img src="https://via.placeholder.com/60x40/00A651/white?text=QH" alt="Bamboo Airways"
+                                class="mr-4">
+                            <div>
+                                <h3 class="font-bold text-lg">Bamboo Airways</h3>
+                                <p class="text-sm text-gray-600">QH 456</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">20:15</p>
+                                <p class="text-sm text-gray-600">SGN</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600">2h 00m</p>
+                                <div class="border-t border-gray-300 my-2"></div>
+                                <p class="text-sm text-gray-600">Bay thẳng</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">22:15</p>
+                                <p class="text-sm text-gray-600">HAN</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right ml-6">
+                        <p class="text-3xl font-bold text-red-600">2,100,000₫</p>
+                        <p class="text-sm text-gray-600">Giá mỗi người</p>
+                        <button
+                            class="vna-primary text-white px-6 py-2 rounded-md mt-4 hover:bg-blue-800 transition-colors">
+                            Chọn vé
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nút tải thêm -->
+        <div class="text-center mt-8">
+            <button class="vna-primary text-white px-8 py-3 rounded-md hover:bg-blue-800 transition-colors">
+                Tải thêm chuyến bay
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Xử lý bộ lọc
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', function () {
+                // Logic lọc chuyến bay
+                console.log('Bộ lọc thay đổi:', this.value);
+            });
+        });
+
+        // Xử lý chọn vé
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent === 'Chọn vé') {
+                button.addEventListener('click', function () {
+                    alert('Chuyển đến trang đặt vé...');
+                    window.location.href = 'booking.html';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
