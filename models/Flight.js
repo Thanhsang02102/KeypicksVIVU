@@ -18,11 +18,7 @@ const flightSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        time: {
-            type: String,
-            required: true
-        },
-        date: {
+        timestamp: {
             type: Date,
             required: true
         }
@@ -36,21 +32,13 @@ const flightSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        time: {
-            type: String,
-            required: true
-        },
-        date: {
+        timestamp: {
             type: Date,
             required: true
         }
     },
     duration: {
         type: String,
-        required: true
-    },
-    price: {
-        type: Number,
         required: true
     },
     type: {

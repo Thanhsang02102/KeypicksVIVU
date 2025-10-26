@@ -71,13 +71,50 @@ else {
     Write-Success "Đã tạo .env từ env.example"
 }
 
-# Step 3: Pull Docker images
+# Step 3: Pull Docker images (skip if already exists)
 Write-Header "3. Pull Docker images"
-Write-Info "Đang download images (có thể mất vài phút)..."
-docker-compose pull
 
-# Step 4: Build application
-Write-Header "4. Build ứng dụng"
+# Extract image names from docker-compose.yml using PowerShell regex
+$mongoImage = (Get-Content docker-compose.yml | Select-String "^\s*image:\s*mongo:" | Select-Object -First 1).Line -replace '^\s*image:\s*', ''
+$mongoExpressImage = (Get-Content docker-compose.yml | Select-String "^\s*image:\s*mongo-express:" | Select-Object -First 1).Line -replace '^\s*image:\s*', ''
+
+# Check if MongoDB image exists
+try {
+    docker image inspect $mongoImage 2>&1 | Out-Null
+    Write-Success "MongoDB image ($mongoImage) đã tồn tại, bỏ qua pull"
+}
+catch {
+    Write-Info "Đang pull MongoDB image ($mongoImage)..."
+    docker pull $mongoImage
+    Write-Success "Đã pull MongoDB image"
+}
+
+# Check if Mongo Express image exists
+try {
+    docker image inspect $mongoExpressImage 2>&1 | Out-Null
+    Write-Success "Mongo Express image ($mongoExpressImage) đã tồn tại, bỏ qua pull"
+}
+catch {
+    Write-Info "Đang pull Mongo Express image ($mongoExpressImage)..."
+    docker pull $mongoExpressImage
+    Write-Success "Đã pull Mongo Express image"
+}
+
+# Step 4: Build CSS
+Write-Header "4. Build CSS locally"
+Write-Info "Đang build Tailwind CSS và setup Font Awesome..."
+if (Test-Path "node_modules\.bin\tailwindcss.cmd") {
+    npm run build:css
+    Write-Success "CSS đã được build thành công"
+} else {
+    Write-Warning "Tailwind CSS chưa được cài đặt. Cài đặt dependencies..."
+    npm install
+    npm run build:css
+    Write-Success "CSS đã được build thành công"
+}
+
+# Step 5: Build application
+Write-Header "5. Build ứng dụng Docker"
 Write-Info "Đang build ứng dụng..."
 docker-compose build
 
@@ -107,8 +144,8 @@ if ($startNow -ne 'n' -and $startNow -ne 'N') {
     docker-compose up -d
     
     # Wait for services to be ready
-    Write-Info "Đợi services khởi động (10 giây)..."
-    Start-Sleep -Seconds 10
+    Write-Info "Đợi services khởi động (3 giây)..."
+    Start-Sleep -Seconds 3
     
     # Ask if user wants to seed database
     Write-Host ""

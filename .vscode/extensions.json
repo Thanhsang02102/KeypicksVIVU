@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "ms-vscode-remote.remote-containers",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "mongodb.mongodb-vscode",
+    "ms-azuretools.vscode-docker",
+    "bradlc.vscode-tailwindcss",
+    "christian-kohler.path-intellisense",
+    "pkief.material-icon-theme",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "usernamehw.errorlens"
+  ]
+}
+

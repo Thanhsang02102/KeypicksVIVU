@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xác nhận đặt vé - KeyPicks VIVU</title>
     <link rel="icon" type="image/png" href="../img/logo.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
     <style>
         .vna-primary {
             background-color: #0B4F9A;
@@ -123,13 +123,14 @@
             </div>
 
             <!-- Tóm tắt thanh toán -->
+            <!-- NOTE: In production, prices should be loaded from booking API response -->
             <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
                 <h3 class="text-xl font-bold mb-4">Tóm tắt thanh toán</h3>
 
-                <div class="space-y-2">
+                <div class="space-y-2" id="payment-summary">
                     <div class="flex justify-between">
                         <span>Vé người lớn x1</span>
-                        <span>1,850,000₫</span>
+                        <span class="ticket-price">Đang tải...</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Thuế và phí</span>
@@ -142,7 +143,7 @@
                     <hr class="border-gray-300 my-2">
                     <div class="flex justify-between text-lg font-bold">
                         <span>Tổng cộng</span>
-                        <span class="text-red-600">2,100,000₫</span>
+                        <span class="text-red-600 total-amount">Đang tải...</span>
                     </div>
                 </div>
             </div>

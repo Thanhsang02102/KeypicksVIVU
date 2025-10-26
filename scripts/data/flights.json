@@ -1,0 +1,544 @@
+{
+    "flights": [
+        {
+            "airline": "VN",
+            "flightNumber": "VN210",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T06:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T08:00:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 120,
+            "totalSeats": 180
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN211",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T09:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T11:30:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 95,
+            "totalSeats": 180
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ150",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T07:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T09:30:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 150,
+            "totalSeats": 180
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ151",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T14:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T16:00:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 132,
+            "totalSeats": 180
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH201",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T10:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T12:00:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 110,
+            "totalSeats": 160
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH202",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T17:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T19:30:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 88,
+            "totalSeats": 160
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN310",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T08:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T09:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 75,
+            "totalSeats": 150
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN311",
+            "departure": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T13:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T14:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 62,
+            "totalSeats": 150
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ250",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T11:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T13:00:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 98,
+            "totalSeats": 150
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ251",
+            "departure": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T16:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T17:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 105,
+            "totalSeats": 150
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH301",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T15:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T17:00:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 68,
+            "totalSeats": 140
+        },
+        {
+            "airline": "BL",
+            "flightNumber": "BL401",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T06:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "CXR",
+                "city": "Nha Trang",
+                "timestamp": "2025-10-27T07:45:00+07:00"
+            },
+            "duration": "1h 15m",
+            "type": "direct",
+            "availableSeats": 55,
+            "totalSeats": 120
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ350",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T10:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "CXR",
+                "city": "Nha Trang",
+                "timestamp": "2025-10-27T11:15:00+07:00"
+            },
+            "duration": "1h 15m",
+            "type": "direct",
+            "availableSeats": 85,
+            "totalSeats": 120
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN410",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T07:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "PQC",
+                "city": "Phú Quốc",
+                "timestamp": "2025-10-27T08:00:00+07:00"
+            },
+            "duration": "1h 00m",
+            "type": "direct",
+            "availableSeats": 42,
+            "totalSeats": 120
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN411",
+            "departure": {
+                "airport": "PQC",
+                "city": "Phú Quốc",
+                "timestamp": "2025-10-27T16:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T17:00:00+07:00"
+            },
+            "duration": "1h 00m",
+            "type": "direct",
+            "availableSeats": 35,
+            "totalSeats": 120
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ450",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T12:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "PQC",
+                "city": "Phú Quốc",
+                "timestamp": "2025-10-27T13:00:00+07:00"
+            },
+            "duration": "1h 00m",
+            "type": "direct",
+            "availableSeats": 78,
+            "totalSeats": 120
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH401",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T09:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "PQC",
+                "city": "Phú Quốc",
+                "timestamp": "2025-10-27T10:00:00+07:00"
+            },
+            "duration": "1h 00m",
+            "type": "direct",
+            "availableSeats": 90,
+            "totalSeats": 140
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN510",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T08:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T09:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 65,
+            "totalSeats": 150
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ550",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T11:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-27T12:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 102,
+            "totalSeats": 150
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH501",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T15:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "PQC",
+                "city": "Phú Quốc",
+                "timestamp": "2025-10-27T17:00:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 48,
+            "totalSeats": 140
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN610",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T08:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "HUI",
+                "city": "Huế",
+                "timestamp": "2025-10-27T10:00:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 58,
+            "totalSeats": 120
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ650",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T14:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "VCA",
+                "city": "Cần Thơ",
+                "timestamp": "2025-10-27T15:15:00+07:00"
+            },
+            "duration": "0h 45m",
+            "type": "direct",
+            "availableSeats": 72,
+            "totalSeats": 100
+        },
+        {
+            "airline": "BL",
+            "flightNumber": "BL501",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-27T10:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "DLI",
+                "city": "Đà Lạt",
+                "timestamp": "2025-10-27T11:15:00+07:00"
+            },
+            "duration": "0h 45m",
+            "type": "direct",
+            "availableSeats": 45,
+            "totalSeats": 80
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH601",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T07:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "VDO",
+                "city": "Vân Đồn",
+                "timestamp": "2025-10-27T07:50:00+07:00"
+            },
+            "duration": "0h 50m",
+            "type": "direct",
+            "availableSeats": 65,
+            "totalSeats": 100
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN710",
+            "departure": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-27T10:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "HPH",
+                "city": "Hải Phòng",
+                "timestamp": "2025-10-27T10:40:00+07:00"
+            },
+            "duration": "0h 40m",
+            "type": "direct",
+            "availableSeats": 55,
+            "totalSeats": 80
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN212",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-28T12:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-28T14:30:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 140,
+            "totalSeats": 180
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ152",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-28T16:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-28T18:00:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 165,
+            "totalSeats": 180
+        },
+        {
+            "airline": "QH",
+            "flightNumber": "QH203",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-28T18:30:00+07:00"
+            },
+            "arrival": {
+                "airport": "HAN",
+                "city": "Hà Nội",
+                "timestamp": "2025-10-28T20:30:00+07:00"
+            },
+            "duration": "2h 00m",
+            "type": "direct",
+            "availableSeats": 125,
+            "totalSeats": 160
+        },
+        {
+            "airline": "VN",
+            "flightNumber": "VN312",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-28T06:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-28T07:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 88,
+            "totalSeats": 150
+        },
+        {
+            "airline": "VJ",
+            "flightNumber": "VJ252",
+            "departure": {
+                "airport": "SGN",
+                "city": "TP. Hồ Chí Minh",
+                "timestamp": "2025-10-28T19:00:00+07:00"
+            },
+            "arrival": {
+                "airport": "DAD",
+                "city": "Đà Nẵng",
+                "timestamp": "2025-10-28T20:30:00+07:00"
+            },
+            "duration": "1h 30m",
+            "type": "direct",
+            "availableSeats": 112,
+            "totalSeats": 150
+        }
+    ]
+}

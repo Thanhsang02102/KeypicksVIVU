@@ -44,6 +44,10 @@ build/
 .next/
 out/
 
+# CSS Build (Note: ui/css/tailwind.css is intentionally NOT ignored)
+# It's a generated file but should be committed for production deployment
+# To rebuild: npm run build:css
+
 # Database
 *.sqlite
 *.sqlite3
@@ -63,7 +67,14 @@ Thumbs.db
 desktop.ini
 
 # IDE & Editor
-.vscode/
+# Allow VS Code workspace settings and debug configs
+# But ignore personal settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+
 .idea/
 *.swp
 *.swo

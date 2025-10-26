@@ -26,13 +26,20 @@ class BookingManager {
     }
 
     // Tính tổng tiền
+    // NOTE: Price calculation moved to separate pricing module
+    // This is a temporary placeholder - will be replaced with actual pricing API call
     calculateTotal(flight, passengers) {
-        const basePrice = flight.price || 1850000;
+        console.warn('Price calculation should use Pricing Module API');
+        
+        // Temporary placeholder - pricing logic will be handled by backend
+        const passengerCount = passengers.length || 1;
         const tax = 200000;
         const serviceFee = 50000;
-        const passengerCount = passengers.length;
-
-        return (basePrice * passengerCount) + tax + serviceFee;
+        
+        // TODO: Replace with actual API call to pricing module
+        // Example: const pricing = await apiManager.get(`/flights/${flightId}/pricing`, params);
+        
+        return tax + serviceFee; // Base fees only, actual flight price will come from pricing module
     }
 
     // Xác nhận booking
@@ -57,9 +64,11 @@ class BookingManager {
     }
 
     // Tạo booking trên server
-    async submitBooking(flightId, passengers, contactInfo) {
+    async submitBooking(flightId, passengers, contactInfo, pricingData) {
         try {
-            const totalAmount = this.calculateTotal({ price: 1850000 }, passengers);
+            // NOTE: totalAmount should come from pricing module API response
+            const totalAmount = pricingData?.total || this.calculateTotal({}, passengers);
+            
             const response = await window.apiManager.post('/bookings', {
                 flightId: flightId,
                 passengers: passengers,

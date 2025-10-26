@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom VNA Colors */
+.vna-primary {
+  background-color: #0B4F9A;
+}
+
+.vna-text-primary {
+  color: #0B4F9A;
+}
+
+/* Additional custom styles */
+:root {
+  --primary-color: #0056b3;
+  --secondary-color: #ffc107;
+  --bg-light: #f4f7f9;
+  --text-dark: #333;
+  --text-light: #ffffff;
+}
+

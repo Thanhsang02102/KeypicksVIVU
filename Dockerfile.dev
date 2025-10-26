@@ -1,20 +1,24 @@
 # Development Dockerfile
 FROM node:24-alpine
 
-# Set timezone to UTC
-ENV TZ=UTC
-RUN apk add --no-cache tzdata && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone
-
 WORKDIR /app
 
+# Change ownership of /app to node user
+RUN chown -R node:node /app
+
+# Create .profile for node user to prevent zsh errors
+RUN touch /home/node/.profile && \
+    chown node:node /home/node/.profile
+
+# Switch to node user
+USER node
+
 # Install dependencies
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 RUN npm install
 
 # Copy application code
-COPY . .
+COPY --chown=node:node . .
 
 ENV NODE_ENV=development
 ENV PORT=3000

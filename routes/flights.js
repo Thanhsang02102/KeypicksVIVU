@@ -7,7 +7,7 @@ const Airline = require('../models/Airline');
 // Search flights
 router.get('/search', async (req, res) => {
     try {
-        const { departure, arrival, date, passengers, class: flightClass } = req.query;
+        const { departure, arrival, date, passengers } = req.query;
 
         // Build query
         const query = {};
@@ -26,23 +26,17 @@ router.get('/search', async (req, res) => {
             const nextDay = new Date(searchDate);
             nextDay.setDate(nextDay.getDate() + 1);
             
-            query['departure.date'] = {
+            query['departure.timestamp'] = {
                 $gte: searchDate,
                 $lt: nextDay
             };
         }
 
-        // Find flights
-        let flights = await Flight.find(query).sort({ 'departure.date': 1, 'departure.time': 1 });
+        // Find flights sorted by departure timestamp
+        const flights = await Flight.find(query).sort({ 'departure.timestamp': 1 });
 
-        // Apply class price multiplier
-        if (flightClass && flightClass !== 'economy') {
-            flights = flights.map(flight => {
-                const flightObj = flight.toObject();
-                flightObj.price = flightObj.price * (flightClass === 'business' ? 2 : 1.5);
-                return flightObj;
-            });
-        }
+        // Note: Pricing logic moved to dedicated pricing module
+        // Price calculation will depend on seat class, promotions, and booking time
 
         res.json({
             success: true,

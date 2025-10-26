@@ -23,7 +23,7 @@ cd KeypicksVIVU
 
 ```bash
 # Cấp quyền execute cho các scripts
-chmod +x init.sh quick-start.sh docker.sh
+chmod +x init.sh docker.sh quick-start.sh
 ```
 
 > **Windows Users:** Không cần bước này. Có thể chạy trực tiếp `.ps1` files.
@@ -31,16 +31,19 @@ chmod +x init.sh quick-start.sh docker.sh
 ### 3️⃣ Khởi động với Init Script - Một lệnh duy nhất! (Khuyến nghị)
 
 **Linux/Mac:**
+
 ```bash
-./init.sh
+./quick-start.sh
 ```
 
 **Windows PowerShell:**
+
 ```powershell
-.\init.ps1
+.\quick-start.ps1
 ```
 
 **Script này sẽ tự động:**
+
 - ✅ Tạo file `.env` từ `env.example` (nếu chưa có)
 - ✅ Build Docker images (nếu chưa có)
 - ✅ Khởi động MongoDB container với timezone UTC
@@ -50,6 +53,7 @@ chmod +x init.sh quick-start.sh docker.sh
 - ✅ Hiển thị thông tin các services
 
 **Ví dụ output khi chạy script:**
+
 ```
 🚀 Initializing KeypicksVIVU Development Environment
 ====================================================
@@ -86,24 +90,28 @@ Nếu bạn muốn điều khiển chi tiết hơn hoặc không dùng Init scri
 ### Sử dụng Docker Script (Điều khiển services riêng lẻ)
 
 **Khởi động development:**
+
 ```bash
 ./docker.sh dev          # Linux/Mac
 .\docker.ps1 dev         # Windows
 ```
 
 **Dừng tất cả services:**
+
 ```bash
 ./docker.sh down         # Linux/Mac
 .\docker.ps1 down        # Windows
 ```
 
 **Xem logs:**
+
 ```bash
 ./docker.sh logs         # Linux/Mac
 .\docker.ps1 logs        # Windows
 ```
 
 **Rebuild containers:**
+
 ```bash
 ./docker.sh rebuild      # Linux/Mac
 .\docker.ps1 rebuild     # Windows
@@ -152,7 +160,10 @@ Xem chi tiết đầy đủ về Docker setup, troubleshooting, và advanced com
 
 📚 **[DOCKER_GUIDE.md](./DOCKER_GUIDE.md)** - Hướng dẫn Docker chi tiết
 
-**Lưu ý:** Tất cả services chạy trong Docker với timezone UTC. Seed data tự động convert từ Asia/Ho_Chi_Minh sang UTC.
+**Lưu ý:**
+
+- Tất cả services chạy trong Docker với timezone UTC
+- **Datetime: BẮT BUỘC sử dụng ISO8601 format** (xem [DATETIME_GUIDE.md](./DATETIME_GUIDE.md))
 
 ---
 
@@ -161,12 +172,14 @@ Xem chi tiết đầy đủ về Docker setup, troubleshooting, và advanced com
 ### Init Scripts (Khuyến nghị cho lần đầu)
 
 **Khởi động lần đầu:**
+
 ```bash
 ./init.sh                # Linux/Mac
 .\init.ps1               # Windows
 ```
 
 **Khởi động nhanh (sau lần đầu):**
+
 ```bash
 ./quick-start.sh         # Linux/Mac
 .\quick-start.ps1        # Windows
@@ -175,24 +188,28 @@ Xem chi tiết đầy đủ về Docker setup, troubleshooting, và advanced com
 ### Docker Scripts (Điều khiển chi tiết hơn)
 
 **Khởi động development:**
+
 ```bash
 ./docker.sh dev          # Linux/Mac
 .\docker.ps1 dev         # Windows
 ```
 
 **Dừng tất cả services:**
+
 ```bash
 ./docker.sh down         # Linux/Mac
 .\docker.ps1 down        # Windows
 ```
 
 **Xem logs:**
+
 ```bash
 ./docker.sh logs         # Linux/Mac
 .\docker.ps1 logs        # Windows
 ```
 
 **Rebuild containers:**
+
 ```bash
 ./docker.sh rebuild      # Linux/Mac
 .\docker.ps1 rebuild     # Windows
@@ -222,10 +239,12 @@ docker stats
 docker-compose logs -f app
 ```
 
-**Lưu ý:** 
+**Lưu ý:**
+
 - Không bao giờ sử dụng `localhost` để kết nối giữa các containers
 - Sử dụng service names (`mongodb`, `app`) trong Docker network
 - Tất cả containers chạy với timezone UTC
+- **Datetime: BẮT BUỘC sử dụng ISO8601 format** (Backend lưu Date objects, Frontend gửi/nhận ISO8601)
 
 ---
 
@@ -234,6 +253,7 @@ docker-compose logs -f app
 ### Docker Script Issues
 
 #### Script không có quyền thực thi (Linux/Mac)
+
 ```bash
 # Cấp quyền execute cho scripts
 chmod +x docker.sh init.sh quick-start.sh
@@ -241,6 +261,7 @@ chmod +x docker.sh init.sh quick-start.sh
 ```
 
 #### PowerShell Execution Policy Error (Windows)
+
 ```powershell
 # Cho phép chạy script trong session hiện tại
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
@@ -250,6 +271,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ### Docker Container Issues
 
 #### Port đã được sử dụng
+
 ```bash
 # Kiểm tra port 3000 hoặc 27017
 netstat -ano | findstr :3000  # Windows
@@ -265,6 +287,7 @@ ports:
 ```
 
 #### Container không khởi động
+
 ```bash
 # Xem logs để debug
 docker-compose logs app
@@ -280,6 +303,7 @@ docker-compose up --build
 ```
 
 #### MongoDB connection error
+
 ```bash
 # Đảm bảo MongoDB đã khởi động hoàn toàn
 docker-compose logs mongodb | grep "Waiting for connections"
@@ -296,6 +320,7 @@ docker-compose exec app sh -c "ping -c 2 mongodb"
 ```
 
 #### Hot reload không hoạt động (code thay đổi nhưng không tự động restart)
+
 ```bash
 # Trên Windows, có thể cần bật polling
 # Kiểm tra file package.json có nodemonConfig với legacyWatch: true
@@ -305,6 +330,7 @@ docker-compose restart app
 ```
 
 #### Disk space đầy hoặc Docker chạy chậm
+
 ```bash
 # Dọn dẹp unused containers, images, volumes
 docker system prune -a
@@ -317,6 +343,7 @@ docker volume prune
 ```
 
 #### Timezone không đúng
+
 ```bash
 # Kiểm tra timezone trong containers
 docker-compose exec app date
@@ -331,8 +358,9 @@ docker-compose up --build
 ### Docker Installation Issues
 
 #### Docker không được cài đặt
+
 - **Windows/Mac:** Cài đặt [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- **Linux:** 
+- **Linux:**
   ```bash
   # Ubuntu/Debian
   curl -fsSL https://get.docker.com -o get-docker.sh
@@ -340,6 +368,7 @@ docker-compose up --build
   ```
 
 #### Docker Compose không tìm thấy
+
 ```bash
 # Kiểm tra version
 docker compose version  # Docker Compose V2 (built-in)
@@ -352,6 +381,7 @@ docker compose up
 ### Cần thêm trợ giúp?
 
 Xem hướng dẫn chi tiết tại:
+
 - 📚 **[DOCKER_GUIDE.md](./DOCKER_GUIDE.md)** - Docker troubleshooting đầy đủ
 - 📚 **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** - Development best practices
 - 📅 **[DATETIME_GUIDE.md](./DATETIME_GUIDE.md)** - Datetime & timezone handling
@@ -396,4 +426,3 @@ Sau khi khởi động thành công với Docker, bạn có thể:
 - **[DATABASE_COMMANDS_GUIDE.md](./DATABASE_COMMANDS_GUIDE.md)** - MongoDB commands
 
 Happy coding! ✈️
-

@@ -81,13 +81,46 @@ print_header "3. Cấp quyền thực thi cho scripts"
 chmod +x docker.sh
 print_success "Đã cấp quyền cho docker.sh"
 
-# Step 4: Pull Docker images
+# Step 4: Pull Docker images (skip if already exists)
 print_header "4. Pull Docker images"
-print_info "Đang download images (có thể mất vài phút)..."
-docker-compose pull
 
-# Step 5: Build application
-print_header "5. Build ứng dụng"
+# Extract image names from docker-compose.yml using sed
+MONGO_IMAGE=$(grep -E "^\s*image:\s*mongo:" docker-compose.yml | head -1 | sed 's/.*image:\s*\(.*\)/\1/')
+MONGO_EXPRESS_IMAGE=$(grep -E "^\s*image:\s*mongo-express:" docker-compose.yml | head -1 | sed 's/.*image:\s*\(.*\)/\1/')
+
+# Check if MongoDB image exists
+if docker image inspect "$MONGO_IMAGE" &> /dev/null; then
+    print_success "MongoDB image ($MONGO_IMAGE) đã tồn tại, bỏ qua pull"
+else
+    print_info "Đang pull MongoDB image ($MONGO_IMAGE)..."
+    docker pull "$MONGO_IMAGE"
+    print_success "Đã pull MongoDB image"
+fi
+
+# Check if Mongo Express image exists
+if docker image inspect "$MONGO_EXPRESS_IMAGE" &> /dev/null; then
+    print_success "Mongo Express image ($MONGO_EXPRESS_IMAGE) đã tồn tại, bỏ qua pull"
+else
+    print_info "Đang pull Mongo Express image ($MONGO_EXPRESS_IMAGE)..."
+    docker pull "$MONGO_EXPRESS_IMAGE"
+    print_success "Đã pull Mongo Express image"
+fi
+
+# Step 5: Build CSS
+print_header "5. Build CSS locally"
+print_info "Đang build Tailwind CSS và setup Font Awesome..."
+if [ -f "node_modules/.bin/tailwindcss.cmd" ] || [ -f "node_modules/.bin/tailwindcss" ]; then
+    npm run build:css
+    print_success "CSS đã được build thành công"
+else
+    print_warning "Tailwind CSS chưa được cài đặt. Cài đặt dependencies..."
+    npm install
+    npm run build:css
+    print_success "CSS đã được build thành công"
+fi
+
+# Step 6: Build application
+print_header "6. Build ứng dụng Docker"
 print_info "Đang build ứng dụng..."
 docker-compose build
 
@@ -96,15 +129,15 @@ print_header "✅ Setup hoàn tất!"
 echo ""
 echo "  Để khởi động ứng dụng:"
 echo ""
-echo "  ${GREEN}Option 1:${NC} docker-compose up"
-echo "  ${GREEN}Option 2:${NC} ./docker.sh dev"
-echo "  ${GREEN}Option 3:${NC} make dev"
+echo -e "  ${GREEN}Option 1:${NC} docker-compose up"
+echo -e "  ${GREEN}Option 2:${NC} ./docker.sh dev"
+echo -e "  ${GREEN}Option 3:${NC} make dev"
 echo ""
 echo "  Sau đó truy cập (từ host machine):"
-echo "  - Ứng dụng:     ${BLUE}http://localhost:3000${NC}"
-echo "  - Mongo Express: ${BLUE}http://localhost:8081${NC}"
+echo -e "  - Ứng dụng:     ${BLUE}http://localhost:3000${NC}"
+echo -e "  - Mongo Express: ${BLUE}http://localhost:8081${NC}"
 echo ""
-echo "  ${YELLOW}⚠️  Lưu ý về Docker Environment:${NC}"
+echo -e "  ${YELLOW}⚠️  Lưu ý về Docker Environment:${NC}"
 echo "  - Tất cả services chạy trong containers với timezone UTC"
 echo "  - Kết nối giữa containers: sử dụng service names (mongodb, app)"
 echo "  - Không sử dụng localhost để kết nối giữa containers"
@@ -121,8 +154,8 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     docker-compose up -d
     
     # Wait for services to be ready
-    print_info "Đợi services khởi động (10 giây)..."
-    sleep 10
+    print_info "Đợi services khởi động (3 giây)..."
+    sleep 3
     
     # Ask if user wants to seed database
     echo ""
@@ -134,9 +167,9 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
         print_success "Database đã được seed thành công!"
         echo ""
         print_info "Bạn có thể:"
-        echo "  - Xem logs: ${GREEN}docker-compose logs -f${NC}"
-        echo "  - Seed lại:  ${GREEN}make seed${NC}"
-        echo "  - Dừng app: ${GREEN}docker-compose down${NC}"
+        echo -e "  - Xem logs: ${GREEN}docker-compose logs -f${NC}"
+        echo -e "  - Seed lại:  ${GREEN}make seed${NC}"
+        echo -e "  - Dừng app: ${GREEN}docker-compose down${NC}"
     else
         print_info "Bỏ qua seed. Bạn có thể seed sau bằng lệnh: ${GREEN}make seed${NC}"
     fi
@@ -146,8 +179,8 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     print_info "Timezone: Tất cả containers chạy ở UTC"
     print_info "Seed data: Tự động convert từ Asia/Ho_Chi_Minh sang UTC"
     echo ""
-    echo "  Xem logs: ${GREEN}docker-compose logs -f${NC}"
-    echo "  Check timezone: ${GREEN}docker-compose exec app date${NC}"
+    echo -e "  Xem logs: ${GREEN}docker-compose logs -f${NC}"
+    echo -e "  Check timezone: ${GREEN}docker-compose exec app date${NC}"
 else
     print_info "Chạy 'docker-compose up' khi bạn sẵn sàng!"
     print_info "Sau đó seed database bằng: ${GREEN}make seed${NC}"
