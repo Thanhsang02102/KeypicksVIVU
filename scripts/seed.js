@@ -12,12 +12,12 @@ const connectDB = async () => {
     try {
         // Use MONGODB_URI from environment, fallback to docker service name
         const mongoUri = process.env.MONGODB_URI || 'mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin';
-        await mongoose.connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-        console.log('MongoDB connected successfully');
-        console.log('Server timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+        const conn = await mongoose.connect(mongoUri);
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        console.log(`Database: ${conn.connection.name}`);
+        console.log(
+            `Server Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone || process.env.TZ || 'System default'}`
+        );
         console.log('Current UTC time:', new Date().toISOString());
     } catch (error) {
         console.error('MongoDB connection error:', error);
@@ -62,34 +62,34 @@ const seedAirlines = async () => {
 const seedFlights = async () => {
     try {
         await Flight.deleteMany({});
-        
+
         console.log('\n📅 Creating flight data from ISO timestamps...');
         console.log('   Timestamps include timezone offsets for international compatibility');
         console.log('   Database stores in UTC automatically\n');
-        
+
         // Load flights data from JSON file
         const data = loadJSONFile('flights.json');
-        
+
         // Map flights with timestamp conversion
-        const flights = data.flights.map(flight => ({
+        const flights = data.flights.map((flight) => ({
             airline: flight.airline,
             flightNumber: flight.flightNumber,
             departure: {
                 airport: flight.departure.airport,
                 city: flight.departure.city,
-                timestamp: new Date(flight.departure.timestamp)
+                timestamp: new Date(flight.departure.timestamp),
             },
             arrival: {
                 airport: flight.arrival.airport,
                 city: flight.arrival.city,
-                timestamp: new Date(flight.arrival.timestamp)
+                timestamp: new Date(flight.arrival.timestamp),
             },
             duration: flight.duration,
             type: flight.type,
             availableSeats: flight.availableSeats,
-            totalSeats: flight.totalSeats
+            totalSeats: flight.totalSeats,
         }));
-        
+
         await Flight.insertMany(flights);
         console.log('✓ Flights seeded successfully');
         console.log(`   Created ${flights.length} flights`);
@@ -103,14 +103,13 @@ const seedFlights = async () => {
 const seedAll = async () => {
     console.log('Starting database seeding...');
     await connectDB();
-    
+
     await seedAirports();
     await seedAirlines();
     await seedFlights();
-    
+
     console.log('\n✓ Database seeding completed!');
     process.exit(0);
 };
 
 seedAll();
-

@@ -3,25 +3,28 @@
 ## 🚀 Quick Commands
 
 ### Seed dữ liệu mẫu
+
 ```bash
-make seed
+npm run seed
 ```
-**Chức năng**: Import dữ liệu mẫu vào MongoDB (chạy trong Docker container)
+
+**Chức năng**: Import dữ liệu mẫu vào MongoDB (chạy locally)
+
 - 10 airports (sân bay Việt Nam)
 - 4 airlines (hãng bay Việt Nam)
-- 7 sample flights (chuyến bay mẫu với timezone Asia/Ho_Chi_Minh tự động convert sang UTC)
+- Sample flights (chuyến bay mẫu)
 
 **Khi nào dùng**:
 - Lần đầu setup project
 - Sau khi reset database
 - Cần dữ liệu để test
 
-**Lưu ý**: Tất cả thời gian trong seed data là Vietnam time (UTC+7) và được tự động convert sang UTC khi lưu vào database.
-
 ### Xóa dữ liệu
+
 ```bash
-make seed-clear
+npm run seed:clear
 ```
+
 **Chức năng**: Xóa toàn bộ database keypicksvivu
 
 ⚠️ **Cảnh báo**: Không thể undo!
@@ -31,21 +34,12 @@ make seed-clear
 - Dữ liệu test bị lộn xộn
 - Trước khi chạy test suite
 
-### Reset database
-```bash
-make db-reset
-```
-**Chức năng**: Xóa database + seed lại (combo của `seed-clear` + `seed`)
-
-**Khi nào dùng**:
-- Dữ liệu bị corrupt
-- Muốn fresh start
-- Sau khi update seed script
-
 ### Backup database
+
 ```bash
 make db-backup
 ```
+
 **Chức năng**: Tạo backup file tại `backups/keypicksvivu_YYYYMMDD_HHMMSS.dump`
 
 **Khi nào dùng**:
@@ -55,9 +49,11 @@ make db-backup
 - Trước khi test với data quan trọng
 
 ### Restore database
+
 ```bash
 make db-restore FILE=backups/keypicksvivu_20251025_143022.dump
 ```
+
 **Chức năng**: Restore database từ backup file
 
 **Khi nào dùng**:
@@ -66,10 +62,12 @@ make db-restore FILE=backups/keypicksvivu_20251025_143022.dump
 - Recovery sau disaster
 
 ### MongoDB shell
+
 ```bash
 make db-shell
 ```
-**Chức năng**: Truy cập MongoDB shell **trong Docker container** để query trực tiếp
+
+**Chức năng**: Truy cập MongoDB shell để query trực tiếp
 
 **Khi nào dùng**:
 - Debug database
@@ -77,63 +75,58 @@ make db-shell
 - Run custom queries
 - Manual data manipulation
 
-**Lưu ý**: Shell chạy trong MongoDB container với timezone UTC. Tất cả timestamps trong database là UTC.
+## 🎯 Quick Start Script
 
-## 🎯 Init Scripts với Seed Option
-
-### Linux/macOS: `init.sh`
+### Linux/macOS: `quick-start.sh`
 
 ```bash
-./init.sh
+chmod +x quick-start.sh
+./quick-start.sh
 ```
 
-Script sẽ:
-1. Kiểm tra Docker & Docker Compose
-2. Tạo `.env` từ `env.example`
-3. Pull & build Docker images
-4. **Hỏi có muốn khởi động không**
-5. **Hỏi có muốn seed database không** ⭐ NEW!
-
-### Windows: `init.ps1`
+### Windows: `quick-start.ps1`
 
 ```powershell
-.\init.ps1
+.\quick-start.ps1
 ```
 
-Tương tự init.sh nhưng cho Windows PowerShell.
+**Script thông minh sẽ tự động:**
+1. ✅ Kiểm tra Node.js 24+, npm 10+, Docker
+2. ✅ Tạo `.env` từ `env.example` (nếu chưa có)
+3. ✅ Cài đặt dependencies (nếu chưa có)
+4. ✅ Khởi động MongoDB và Mongo Express
+5. ✅ Đợi MongoDB sẵn sàng
+6. ✅ **Hỏi có muốn seed database không**
 
 ## 📝 Makefile Commands - Full List
 
 ### Development
+
 ```bash
-make dev         # Khởi động môi trường dev
-make dev-build   # Build và khởi động
+make dev         # Khởi động MongoDB và Mongo Express
 make dev-down    # Dừng môi trường dev
 make dev-logs    # Xem logs
 ```
 
 ### Database
+
 ```bash
-make seed        # Seed dữ liệu mẫu
-make seed-clear  # Xóa toàn bộ dữ liệu
-make db-reset    # Reset database (xóa + seed)
+make db-shell    # MongoDB shell
 make db-backup   # Backup database
 make db-restore  # Restore từ backup
-make db-shell    # MongoDB shell
 ```
 
 ### Utilities
+
 ```bash
-make shell       # App container shell
-make health      # Check API health
 make stats       # Resource usage
-make logs-app    # App logs
 make logs-db     # MongoDB logs
 make ps          # Container status
 make clean       # Clean everything
 ```
 
 ### Xem tất cả commands
+
 ```bash
 make help
 ```
@@ -141,65 +134,65 @@ make help
 ## 🔄 Typical Workflows
 
 ### 1. First Time Setup
+
 ```bash
-# Run init script
-./init.sh
+# 1. Run quick-start script
+chmod +x quick-start.sh
+./quick-start.sh
 
 # Script sẽ tự động:
-# - Check Docker installation
+# - Check Node.js 24+, npm 10+, Docker
 # - Create .env from env.example
-# - Pull and build Docker images (with UTC timezone)
-# - Start all services in containers
-# - Seed database (nếu chọn Yes) với Vietnam timezone data
+# - Install dependencies
+# - Start MongoDB and Mongo Express
+# - Seed database (nếu chọn Yes)
 
-# Verify từ host machine
+# 2. Chạy app
+npm run dev
+
+# 3. Seed database
+npm run seed
+
+# 4. Verify
 curl http://localhost:3000/api/health
 curl http://localhost:3000/api/flights/airports/list
-
-# Verify timezone trong containers
-docker-compose exec app sh -c "echo TZ=\$TZ && date"
-docker-compose exec mongodb sh -c "echo TZ=\$TZ && date"
 ```
 
 ### 2. Daily Development
+
 ```bash
-# Start
-make dev
+# 1. Start MongoDB (nếu chưa chạy)
+./quick-start.sh
 
-# Work on code...
+# 2. Start app
+npm run dev
 
-# Restart app sau khi thay đổi code
-make restart-app
+# 3. Work on code...
 
-# View logs
-make logs-app
+# 4. Stop app (Ctrl+C)
 
-# Stop
-make dev-down
+# 5. (Optional) Stop MongoDB
+docker-compose down
 ```
 
 ### 3. Database Testing
+
 ```bash
-# Start với fresh data
-make db-reset
+# 1. Start với fresh data
+npm run seed:clear
+npm run seed
 
-# Add test data manually...
+# 2. Test app...
+
+# 3. Inspect data
 make db-shell
-# (thêm data)
 
-# Backup trước khi test
-make db-backup
-
-# Run tests...
-
-# Nếu có lỗi, restore
-make db-restore FILE=backups/keypicksvivu_LATEST.dump
-
-# Hoặc reset lại
-make db-reset
+# 4. Nếu cần restore
+make db-restore FILE=backups/file.dump
 ```
 
 ### 4. Debug Database Issues
+
 ```bash
 # Check MongoDB logs
 make logs-db
@@ -217,23 +210,22 @@ db.airports.find().pretty()
 exit
 
 # Nếu vẫn có vấn đề, reset
-make db-reset
+npm run seed:clear
+npm run seed
 ```
 
 ### 5. Before Deploy
+
 ```bash
-# 1. Backup production database
+# 1. Backup database
 make db-backup
 
-# 2. Test locally với production data
-make db-restore FILE=backups/prod_backup.dump
+# 2. Test locally
 
-# 3. Test migrations/changes
+# 3. Deploy
 
-# 4. Deploy
-
-# 5. Nếu có vấn đề, rollback
-make db-restore FILE=backups/prod_backup.dump
+# 4. Nếu có vấn đề, rollback
+make db-restore FILE=backups/file.dump
 ```
 
 ## 🎓 MongoDB Shell Quick Reference
@@ -258,9 +250,9 @@ db.airports.find().pretty()
 db.airlines.find()
 
 // Find with filter
-db.flights.find({ 
+db.flights.find({
   "departure.airport": "SGN",
-  "arrival.airport": "HAN" 
+  "arrival.airport": "HAN"
 })
 
 // Find one
@@ -293,6 +285,7 @@ db.dropDatabase()
 ## 🔒 Security Notes
 
 ### Development
+
 - Username: `admin`
 - Password: `admin123`
 - Database: `keypicksvivu`
@@ -300,7 +293,9 @@ db.dropDatabase()
 ⚠️ **CHỈ dùng cho development!**
 
 ### Production
+
 Phải thay đổi trong `.env`:
+
 ```env
 MONGO_ROOT_USERNAME=secure_username
 MONGO_ROOT_PASSWORD=very_strong_password_here
@@ -309,9 +304,10 @@ MONGO_ROOT_PASSWORD=very_strong_password_here
 ## 🐛 Troubleshooting
 
 ### Seed fails với "Cannot connect to MongoDB"
+
 ```bash
 # Check MongoDB is running
-make logs-db
+docker ps
 
 # Restart MongoDB
 docker-compose restart mongodb
@@ -320,16 +316,19 @@ docker-compose restart mongodb
 sleep 5
 
 # Try seed again
-make seed
+npm run seed
 ```
 
 ### "make: command not found"
+
 ```bash
-# On Windows without make, use docker-compose directly:
-docker-compose exec -T app npm run seed
+# On Windows without make, use npm directly:
+npm run seed
+npm run seed:clear
 ```
 
 ### Backup fails
+
 ```bash
 # Make sure backups directory exists
 mkdir -p backups
@@ -339,6 +338,7 @@ make db-backup
 ```
 
 ### Restore fails
+
 ```bash
 # Check file exists
 ls -la backups/
@@ -351,9 +351,10 @@ make db-restore FILE=backups/keypicksvivu_20251025_143022.dump
 ```
 
 ### Can't access db-shell
+
 ```bash
 # Make sure MongoDB is running
-docker-compose ps
+docker ps
 
 # Check MongoDB logs
 make logs-db
@@ -368,13 +369,13 @@ make db-shell
 
 - **Setup Guide**: [SETUP_DATABASE.md](SETUP_DATABASE.md)
 - **Development Guide**: [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
-- **Migration Summary**: [MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md)
-- **Backup Guide**: [backups/README.md](backups/README.md)
+- **Docker Guide**: [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
 
 ## 🎉 Summary
 
 Các database commands giúp bạn:
-- ✅ Seed data nhanh chóng
+
+- ✅ Seed data nhanh chóng (chạy locally với `npm run seed`)
 - ✅ Reset database dễ dàng
 - ✅ Backup/restore an toàn
 - ✅ Debug với MongoDB shell
@@ -384,5 +385,4 @@ Các database commands giúp bạn:
 
 ---
 
-**Last updated**: 2025-10-25
-
+**Last updated**: 2025-10-31

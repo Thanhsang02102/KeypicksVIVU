@@ -2,349 +2,535 @@
 
 ## 🚀 Quick Start
 
-### Lần đầu tiên setup
+### Setup Lần Đầu
 
+**Chạy Quick Start Script**
 ```bash
 # Linux/macOS
-./init.sh
+chmod +x quick-start.sh
+./quick-start.sh
 
 # Windows
-.\init.ps1
+.\quick-start.ps1
 ```
 
-Script sẽ tự động:
+Script thông minh sẽ tự động:
+1. ✅ Kiểm tra Node.js 24+, npm 10+, Docker
+2. ✅ Tạo file `.env` từ `env.example` (nếu chưa có)
+3. ✅ Cài đặt dependencies (nếu chưa có)
+4. ✅ Pull MongoDB và Mongo Express Docker images
+5. ✅ Khởi động MongoDB và Mongo Express containers
+6. ✅ Build Tailwind CSS
 
-1. ✅ Kiểm tra Docker
-2. ✅ Tạo file .env
-3. ✅ Pull Docker images
-4. ✅ Build ứng dụng
-5. ✅ Khởi động services
-6. ✅ Seed database (nếu chọn)
+> **💡 Pro Tip**: Nếu bạn dùng VS Code, xem section **[🐳 DevContainer Development](#-devcontainer-development)** để setup môi trường development tự động với tất cả extensions và MongoDB tools được cài sẵn!
 
-### Khởi động thường ngày
+### Workflow Phát Triển
 
 ```bash
-# Option 1: Docker Compose
-docker-compose up
-
-# Option 2: Docker script
-./docker.sh dev        # Linux/macOS
-.\docker.ps1 dev       # Windows
-
-# Option 3: Makefile (khuyến nghị)
+# 1. Khởi động MongoDB và Mongo Express (nếu chưa chạy)
+./quick-start.sh
+# hoặc
 make dev
+
+# 2. Chạy app locally
+npm run dev
+
+# 3. (Optional) Seed database
+npm run seed
+
+# 4. Làm việc với code... (nodemon sẽ tự động restart khi có thay đổi)
+
+# 5. Dừng MongoDB khi xong (optional)
+docker-compose down
 ```
 
-## 🐳 DevContainer Setup (Recommended for Debugging)
+## 🏗️ Kiến Trúc Development
+
+### Services
+
+| Service        | Chạy ở đâu | Port  | Credentials     | Mục đích           |
+| -------------- | ---------- | ----- | --------------- | ------------------ |
+| MongoDB        | Docker     | 27017 | admin/admin123  | Database           |
+| Mongo Express  | Docker     | 8081  | admin/admin123  | Database Admin UI  |
+| Express App    | Local      | 3000  | -               | Backend API        |
+
+### Connection
+
+```
+┌─────────────────────┐
+│   Your Machine      │
+│                     │
+│  ┌──────────────┐   │     ┌──────────────────┐
+│  │ Express App  │   │────→│ MongoDB          │
+│  │ (localhost)  │   │     │ (Docker)         │
+│  │ Port 3000    │   │     │ Port 27017       │
+│  └──────────────┘   │     └──────────────────┘
+│                     │
+│                     │     ┌──────────────────┐
+│   Browser           │────→│ Mongo Express    │
+│                     │     │ (Docker)         │
+│                     │     │ Port 8081        │
+└─────────────────────┘     └──────────────────┘
+```
+
+**Connection String:**
+```
+mongodb://admin:admin123@localhost:27017/keypicksvivu?authSource=admin
+```
+
+## 🐳 DevContainer Development
 
 ### Giới thiệu
 
-DevContainer cho phép bạn phát triển trong một container Docker được cấu hình sẵn với tất cả tools và extensions cần thiết, đặc biệt hữu ích cho debugging.
+DevContainer cho phép bạn phát triển trong một môi trường Docker được cấu hình sẵn với tất cả tools và extensions cần thiết. Điều này đảm bảo:
+- ✅ Môi trường phát triển nhất quán giữa các developers
+- ✅ Setup nhanh chóng (chỉ cần VS Code + Docker)
+- ✅ Tự động cài đặt extensions và tools
+- ✅ Không làm "bẩn" máy local với các dependencies
 
-### Yêu cầu
+### Prerequisites
 
-- **Visual Studio Code**
-- **Docker Desktop** đã cài đặt và đang chạy
-- **Dev Containers extension** (`ms-vscode-remote.remote-containers`)
+1. **Docker Desktop** - phải đang chạy
+2. **VS Code** với extension:
+   - Dev Containers (ms-vscode-remote.remote-containers)
 
-### Cài đặt Extension
+### Setup DevContainer
 
-1. Mở VS Code
-2. Vào Extensions (Ctrl+Shift+X)
-3. Tìm và cài đặt: **Dev Containers**
+**Bước 1: Tạo thư mục `.devcontainer`**
 
-### Mở project trong DevContainer
+```bash
+mkdir .devcontainer
+```
 
-**Cách 1:**
+**Bước 2: Tạo file `.devcontainer/devcontainer.json`**
 
-1. Mở folder project trong VS Code
-2. Nhấn `F1` hoặc `Ctrl+Shift+P`
-3. Chọn: **Dev Containers: Reopen in Container**
-4. Đợi container build và khởi động (lần đầu mất vài phút)
+```json
+{
+  "name": "KeypicksVIVU Development",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
 
-**Cách 2:**
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // MongoDB
+        "mongodb.mongodb-vscode",
 
-- Click vào biểu tượng xanh ở góc dưới bên trái VS Code
-- Chọn **Reopen in Container**
+        // JavaScript/Node.js
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
 
-### Tính năng
+        // Docker
+        "ms-azuretools.vscode-docker",
 
-DevContainer tự động cài đặt:
+        // Git
+        "eamodio.gitlens",
 
-- ESLint, Prettier - Code quality
-- MongoDB for VS Code - Database management
-- Docker extension - Container management
-- Tailwind CSS IntelliSense - CSS autocomplete
-- Path Intellisense - File path autocomplete
+        // Utilities
+        "christian-kohler.path-intellisense",
+        "formulahendry.auto-rename-tag",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2,
+        "files.eol": "\n"
+      }
+    }
+  },
 
-**Ports được forward:**
+  "forwardPorts": [3000, 8081, 27017],
+  "portsAttributes": {
+    "3000": {
+      "label": "Express App",
+      "onAutoForward": "notify"
+    },
+    "8081": {
+      "label": "Mongo Express",
+      "onAutoForward": "silent"
+    },
+    "27017": {
+      "label": "MongoDB",
+      "onAutoForward": "silent"
+    }
+  },
 
-- `3000` - Express Server
-- `27017` - MongoDB
-- `8081` - Mongo Express (Admin UI)
+  "postCreateCommand": "npm install && npm run build:css",
 
-### Debug trong DevContainer
+  "remoteUser": "node"
+}
+```
 
-#### Method 1: Debug với Nodemon (Recommended)
+**Bước 3: Update `docker-compose.yml` để support DevContainer**
 
-1. Mở file cần debug (vd: `server.js`, `routes/flights.js`)
-2. Đặt breakpoint bằng cách click vào lề bên trái số dòng (xuất hiện chấm đỏ)
-3. Nhấn `F5` hoặc vào **Run and Debug** panel
-4. Chọn **Debug Express with Nodemon**
-5. Server sẽ khởi động ở debug mode
-6. Truy cập `http://localhost:3000` để trigger breakpoints
-7. Khi sửa code, nodemon tự động restart
+Thêm service `app` vào `docker-compose.yml`:
 
-**Ưu điểm:**
+```yaml
+services:
+  # Existing MongoDB service...
+  mongodb:
+    # ... existing config ...
 
-- ✅ Hot reload tự động
-- ✅ Breakpoints được giữ nguyên khi restart
-- ✅ Giống môi trường development thật
+  # Existing Mongo Express service...
+  mongo-express:
+    # ... existing config ...
 
-#### Method 2: Debug thông thường
+  # DevContainer service
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspace:cached
+      - node_modules:/workspace/node_modules
+    command: sleep infinity
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - keypicks-network
 
-1. Đặt breakpoints trong code
-2. Chọn **Debug Express Server** từ debug panel
-3. Nhấn `F5` để start debugging
+volumes:
+  mongodb_data:
+  node_modules:
 
-**Ưu điểm:**
+networks:
+  keypicks-network:
+    driver: bridge
+```
 
-- ✅ Đơn giản, nhanh
-- ✅ Không cần nodemon
+**Bước 4: Tạo `./Dockerfile.dev`**
 
-#### Method 3: Attach to Running Process
+```dockerfile
+FROM node:24-alpine
 
-Nếu server đã chạy với `--inspect` flag:
+# Install basic tools
+RUN apk add --no-cache \
+    git \
+    openssh-client \
+    bash \
+    curl
 
-1. Chọn **Attach to Process**
-2. Nhấn `F5`
-3. Debugger sẽ attach vào process đang chạy
+# Install global npm packages
+RUN npm install -g nodemon
 
-#### Debug Seed Script
+# Set working directory
+WORKDIR /workspace
 
-1. Mở file `scripts/seed.js`
-2. Đặt breakpoints
-3. Chọn **Debug Seed Script**
-4. Nhấn `F5`
+# Create node user (if not exists)
+RUN addgroup -g 1000 node || true && \
+    adduser -u 1000 -G node -s /bin/bash -D node || true
 
-### Debug Controls
+USER node
+```
 
-| Phím tắt        | Chức năng                          |
-| --------------- | ---------------------------------- |
-| `F5`            | Continue / Start debugging         |
-| `F10`           | Step Over (chạy qua dòng hiện tại) |
-| `F11`           | Step Into (nhảy vào function)      |
-| `Shift+F11`     | Step Out (thoát khỏi function)     |
-| `Ctrl+Shift+F5` | Restart debugging                  |
-| `Shift+F5`      | Stop debugging                     |
+### Mở Project trong DevContainer
 
-### Debug Features
+1. **Mở VS Code tại thư mục project**
+2. **Press** `F1` hoặc `Ctrl+Shift+P`
+3. **Chọn**: "Dev Containers: Reopen in Container"
+4. **Đợi** container build và setup (lần đầu có thể mất vài phút)
 
-**Breakpoints:**
+VS Code sẽ:
+- Build DevContainer image
+- Install tất cả extensions
+- Chạy `postCreateCommand` (npm install + build CSS)
+- Mount workspace vào container
 
-- **Standard Breakpoint** - Click vào lề bên trái
-- **Conditional Breakpoint** - Right-click breakpoint > Edit Breakpoint
-  - Ví dụ: `departure === 'SGN'` (chỉ dừng khi condition true)
-- **Logpoint** - Right-click > Add Logpoint (log ra console mà không dừng)
-  - Ví dụ: `Flight ID: {flight._id}`
+### Sử dụng MongoDB Extension trong DevContainer
 
-**Watch Variables:**
+**MongoDB for VS Code Extension** được tự động cài trong DevContainer.
 
-- Thêm variables vào **Watch** panel để theo dõi giá trị
-- Có thể evaluate expressions: `flight.price * 1.1`, `arr.length`
+#### Kết nối MongoDB
 
-**Call Stack:**
+1. **Mở MongoDB Extension** (biểu tượng leaf ở sidebar)
 
-- Xem call stack hiện tại
-- Click vào frame để xem variables tại thời điểm đó
+2. **Click "Add Connection"**
 
-**Debug Console:**
+3. **Nhập connection string:**
+   ```
+   mongodb://admin:admin123@mongodb:27017/?authSource=admin
+   ```
 
-- Evaluate expressions trong runtime
-- Test functions: `calculatePrice(flight)`
-- Modify variables: `flight.price = 1000`
+   ⚠️ **Lưu ý**: Trong DevContainer, dùng hostname `mongodb` thay vì `localhost`
 
-### Working with MongoDB in DevContainer
+4. **Save Connection** với tên: "KeypicksVIVU Local"
 
-**Sử dụng Mongo Express:**
+#### Thao tác với Database
 
-- Truy cập: http://localhost:8081
-- Username: `admin`
-- Password: `admin123`
+**1. Browse Collections:**
+- Expand connection → databases → `keypicksvivu`
+- Xem các collections: airports, airlines, flights, bookings, users
 
-**Sử dụng MongoDB VS Code Extension:**
+**2. Query trong VS Code:**
+- Right-click collection → "View Documents"
+- Hoặc tạo file `.mongodb` để viết queries:
 
-1. Click vào MongoDB icon trong Activity Bar
-2. Add Connection:
-   - Connection String: `mongodb://admin:admin123@localhost:27017/?authSource=admin`
-3. Browse collections và data trực tiếp trong VS Code
-4. Run queries trực tiếp từ VS Code
+```javascript
+// queries.mongodb
+use('keypicksvivu');
 
-### VS Code Tasks
+// Find all airports
+db.airports.find();
 
-DevContainer cung cấp các tasks có sẵn (nhấn `Ctrl+Shift+P` > **Tasks: Run Task**):
+// Find flights from SGN to HAN
+db.flights.find({
+  "departure.airport": "SGN",
+  "arrival.airport": "HAN"
+});
 
-- **Start Server** - Khởi động server với nodemon
-- **Seed Database** - Seed database
-- **Build CSS** - Build Tailwind CSS
-- **Watch CSS** - Watch CSS changes
-- **Docker: Up** - Start containers
-- **Docker: Down** - Stop containers
-- **Docker: Logs** - View app logs
+// Count total bookings
+db.bookings.countDocuments();
 
-### Tips & Best Practices
+// Find user by email
+db.users.findOne({ email: "test@example.com" });
+```
 
-**Hot Reload:**
+**3. Execute Queries:**
+- Click "Play" button ở đầu mỗi query
+- Hoặc `Ctrl+Alt+E` (execute)
+- Results hiện trong Output panel
 
-- Khi debug với nodemon, mỗi lần save file, server tự động restart
-- Breakpoints được giữ nguyên
-- Console sẽ clear và show lại logs
+**4. Create/Update/Delete:**
+- Right-click document → Edit Document
+- Sửa JSON trực tiếp trong editor
+- Save để update
 
-**Environment Variables:**
+**5. Export Data:**
+- Right-click collection → Export to JSON/CSV
 
-- Đã được cấu hình trong `.vscode/launch.json`
-- Có thể customize nếu cần
+### Workflow với DevContainer
 
-**Multiple Debug Sessions:**
+#### Daily Development
 
-- Có thể debug nhiều files cùng lúc
-- Mỗi debug session có call stack riêng
+```bash
+# 1. Mở VS Code
+code .
 
-**Debugging Async Code:**
+# 2. Reopen in Container (nếu chưa mở)
+# F1 → "Dev Containers: Reopen in Container"
 
-- Breakpoints hoạt động tốt với async/await
-- Có thể step through Promises
+# 3. Trong container terminal, start app
+npm run dev
 
-### Troubleshooting
+# 4. Mở MongoDB extension để xem/query database
+
+# 5. Code... (hot reload tự động)
+
+# 6. Xong việc, đóng VS Code (container tự stop)
+```
+
+#### Seed Database
+
+```bash
+# Trong DevContainer terminal
+npm run seed
+
+# Refresh MongoDB extension để thấy data mới
+```
+
+#### View Database GUI
+
+- **Option 1**: MongoDB Extension trong VS Code (recommended)
+- **Option 2**: Mongo Express tại http://localhost:8081
+
+### DevContainer Commands
+
+```bash
+# Rebuild container (nếu thay đổi devcontainer.json)
+# F1 → "Dev Containers: Rebuild Container"
+
+# Reopen in local (thoát container)
+# F1 → "Dev Containers: Reopen Folder Locally"
+
+# View container logs
+# F1 → "Dev Containers: Show Container Log"
+
+# Attach shell to container
+# F1 → "Dev Containers: Attach Shell"
+```
+
+### Cấu hình MongoDB Extension
+
+**Settings trong DevContainer** (`.devcontainer/devcontainer.json`):
+
+```json
+{
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // MongoDB Extension
+        "mongodb.defaultLimit": 50,
+        "mongodb.showMongoDBStatusBar": true,
+        "mongodb.connectionSaving": "workspaceState",
+
+        // Auto-format MongoDB queries
+        "[mongodb]": {
+          "editor.formatOnSave": true
+        }
+      }
+    }
+  }
+}
+```
+
+### Lợi ích của DevContainer
+
+| Feature | Local Development | DevContainer |
+| ------- | ----------------- | ------------ |
+| Setup time | 15-30 phút | 3-5 phút (auto) |
+| Node.js version | Phải cài manual | Auto (v24) |
+| Extensions | Cài từng người | Auto sync |
+| MongoDB tools | Cài riêng | Đã có sẵn |
+| Consistency | Khác nhau giữa devs | Giống hệt nhau |
+| Clean machine | Dependencies trên máy | Trong container |
+
+### Troubleshooting DevContainer
 
 **Container không start:**
-
 ```bash
-# Kiểm tra Docker Desktop đang chạy
-# Rebuild container
-Ctrl+Shift+P > Dev Containers: Rebuild Container
-```
-
-**Breakpoints không hoạt động:**
-
-```bash
-# Đảm bảo file đã được save
-# Restart debugger (Ctrl+Shift+F5)
-# Kiểm tra source maps
-```
-
-**Port đã được sử dụng:**
-
-```bash
-# Dừng các containers khác
-docker-compose down
-
-# Kiểm tra processes
-# Windows: netstat -ano | findstr :3000
-# Linux: lsof -i :3000
-```
-
-**MongoDB connection failed:**
-
-```bash
-# Đợi vài giây để MongoDB khởi động
-# Check MongoDB container
+# Check Docker Desktop đang chạy
 docker ps
 
-# View logs
-docker logs keypicksvivu-mongodb-dev
+# View container logs
+# F1 → "Dev Containers: Show Container Log"
+
+# Rebuild from scratch
+# F1 → "Dev Containers: Rebuild Container Without Cache"
 ```
 
-### Thoát DevContainer
+**MongoDB Extension không kết nối:**
+```bash
+# Verify MongoDB container đang chạy
+docker ps | grep mongodb
 
-**Reopen Locally:**
+# Check connection string sử dụng hostname 'mongodb'
+# (KHÔNG phải 'localhost' trong DevContainer)
+mongodb://admin:admin123@mongodb:27017/?authSource=admin
 
-1. Nhấn `F1`
-2. Chọn **Dev Containers: Reopen Folder Locally**
+# Restart MongoDB container
+docker-compose restart mongodb
+```
 
-Hoặc click biểu tượng xanh ở góc dưới trái và chọn **Reopen Folder Locally**.
+**npm install fails:**
+```bash
+# Clear node_modules volume
+docker-compose down -v
+docker volume rm keypicksvivu_node_modules
 
-## 📦 Database Commands (Makefile)
+# Rebuild container
+# F1 → "Dev Containers: Rebuild Container"
+```
 
-### Seed dữ liệu mẫu
+**Port already in use:**
+```bash
+# Stop local services trước khi mở DevContainer
+docker-compose down
+
+# Hoặc change ports trong docker-compose.yml
+```
+
+## 📦 Quản Lý Docker Services
+
+### Khởi động MongoDB
 
 ```bash
-make seed
+# Option 1: Quick start script
+./quick-start.sh
+
+# Option 2: Makefile
+make dev
+
+# Option 3: Docker Compose trực tiếp
+docker-compose up -d mongodb mongo-express
+```
+
+### Kiểm tra Status
+
+```bash
+# Xem containers đang chạy
+docker ps
+
+# Hoặc dùng docker-compose
+docker-compose ps
+```
+
+### Xem Logs
+
+```bash
+# Tất cả services
+docker-compose logs -f
+
+# Chỉ MongoDB
+docker-compose logs -f mongodb
+
+# Chỉ Mongo Express
+docker-compose logs -f mongo-express
+```
+
+### Dừng Services
+
+```bash
+# Dừng nhưng giữ data
+docker-compose stop
+
+# Dừng và xóa containers (data vẫn còn trong volumes)
+docker-compose down
+
+# Dừng và xóa TOÀN BỘ (bao gồm data)
+docker-compose down -v
+```
+
+### Restart Services
+
+```bash
+# Restart MongoDB
+docker-compose restart mongodb
+
+# Restart Mongo Express
+docker-compose restart mongo-express
+```
+
+## 🗄️ Database Operations
+
+### Seed Database
+
+```bash
+# Seed dữ liệu mẫu
+npm run seed
 ```
 
 Import vào database:
-
-- 10 airports (sân bay)
+- 10 airports (sân bay Việt Nam)
 - 4 airlines (hãng bay)
-- 30 flights (chuyến bay)
+- Sample flights
 
-### Xóa toàn bộ dữ liệu
+### Clear Database
 
 ```bash
-make seed-clear
+# Xóa toàn bộ dữ liệu
+npm run seed:clear
 ```
 
-⚠️ **Cảnh báo**: Lệnh này sẽ xóa toàn bộ database!
+⚠️ **Cảnh báo**: Không thể undo!
 
-### Reset database (xóa + seed lại)
-
-```bash
-make db-reset
-```
-
-Hữu ích khi:
-
-- Dữ liệu bị corrupt
-- Muốn refresh database
-- Test với dữ liệu sạch
-
-### Backup database
+### MongoDB Shell
 
 ```bash
-make db-backup
-```
-
-Tạo backup file tại: `backups/keypicksvivu_YYYYMMDD_HHMMSS.dump`
-
-### Restore database
-
-```bash
-make db-restore FILE=backups/keypicksvivu_20251025_100000.dump
-```
-
-## 🐚 Shell Access
-
-### App container shell
-
-```bash
-make shell
-```
-
-Truy cập terminal của Node.js app để:
-
-- Run npm commands
-- Debug
-- Inspect files
-
-### MongoDB shell
-
-```bash
+# Access MongoDB shell
 make db-shell
+
+# Hoặc
+docker-compose exec mongodb mongosh -u admin -p admin123 --authenticationDatabase admin
 ```
 
-Truy cập MongoDB shell để:
-
-- Query data trực tiếp
-- Inspect collections
-- Debug database
-
-Example queries:
-
+**Example queries:**
 ```javascript
-// Show databases
-show dbs
-
-// Use keypicksvivu database
+// Select database
 use keypicksvivu
 
 // Show collections
@@ -362,123 +548,54 @@ db.flights.find({
   "departure.airport": "SGN",
   "arrival.airport": "HAN"
 }).pretty()
+
+// Find one flight
+db.flights.findOne({ flightNumber: "VN210" })
 ```
 
-## 📊 Monitoring
-
-### View logs
+### Backup & Restore
 
 ```bash
-# All services
-make dev-logs
+# Backup database
+make db-backup
+# Tạo file: backups/keypicksvivu_YYYYMMDD_HHMMSS.dump
 
-# App only
-make logs-app
-
-# MongoDB only
-make logs-db
+# Restore database
+make db-restore FILE=backups/keypicksvivu_20251025_143022.dump
 ```
 
-### Check health
+## 🎨 Frontend Development
+
+### CSS (Tailwind + Font Awesome)
+
+Website sử dụng Tailwind CSS và Font Awesome được host locally (không dùng CDN).
 
 ```bash
-make health
+# Build CSS một lần
+npm run build:css
+
+# Watch mode (auto-rebuild khi có thay đổi)
+npm run watch:css
 ```
 
-Output:
+**Khi nào cần build CSS:**
+- Sau khi thay đổi HTML classes (Tailwind)
+- Sau khi update `tailwind.config.js`
+- Sau khi update `ui/css/tailwind-input.css`
 
-```json
-{
-  "status": "OK",
-  "timestamp": "2025-10-25T10:00:00.000Z"
-}
-```
+Xem chi tiết: [CSS_BUILD_GUIDE.md](./CSS_BUILD_GUIDE.md)
 
-### View resource usage
+### JavaScript
 
-```bash
-make stats
-```
-
-### View container status
-
-```bash
-make ps
-```
-
-## 🔧 Development Workflow
-
-### Typical workflow
-
-```bash
-# 1. Start services
-make dev
-
-# 2. Seed database (nếu chưa có data)
-make seed
-
-# 3. Code your changes...
-
-# 4. Restart app (nếu cần)
-make restart-app
-
-# 5. View logs
-make logs-app
-
-# 6. Check health
-make health
-
-# 7. Dừng khi xong
-make dev-down
-```
-
-### Reset và test lại từ đầu
-
-```bash
-# 1. Stop services
-make dev-down
-
-# 2. Clean everything
-make clean
-
-# 3. Start fresh
-make dev-build
-
-# 4. Reset database
-make db-reset
-```
-
-## 🗂️ Project Structure
-
-```
-KeypicksVIVU/
-├── config/              # Configuration files
-├── middleware/          # Express middleware
-├── models/             # MongoDB models
-│   ├── Airport.js
-│   ├── Airline.js
-│   ├── Flight.js
-│   ├── Booking.js
-│   └── User.js
-├── routes/             # API routes
-│   ├── flights.js
-│   ├── bookings.js
-│   ├── auth.js
-│   └── users.js
-├── scripts/            # Utility scripts
-│   └── seed.js        # Database seeding
-│   └── data/          # JSON sample data files
-├── ui/                 # Frontend files
-│   ├── css/
-│   ├── js/
-│   ├── pages/
-├── server.js          # Main server file
-└── docker-compose.yml
-```
+Frontend JavaScript files trong `ui/js/`:
+- `api.js` - API client
+- `search.js` - Flight search
+- `booking.js` - Booking flow
+- `utils.js` - Utility functions
 
 ## 🧪 Testing API
 
-### Using curl from Host Machine
+### Using curl
 
 ```bash
 # Health check
@@ -497,128 +614,265 @@ curl "http://localhost:3000/api/flights/search?departure=SGN&arrival=HAN&date=20
 curl http://localhost:3000/api/flights/FLIGHT_ID
 ```
 
-### Using curl from Inside Container
-
-```bash
-# Access app container
-docker-compose exec app sh
-
-# Test using service names
-curl http://app:3000/api/health
-curl http://mongodb:27017
-
-# Or use localhost within container
-curl http://localhost:3000/api/health
-```
-
-### Using browser (Host Machine)
+### Using Browser
 
 - Frontend: http://localhost:3000
-- Mongo Express: http://localhost:8081
-  - Username: `admin`
-  - Password: `admin123`
+- Mongo Express: http://localhost:8081 (admin/admin123)
+- API Health: http://localhost:3000/api/health
 
 ## 📝 Environment Variables
 
-Các biến trong `.env` (hoặc docker-compose.yml):
+File `.env` được tạo tự động từ `env.example`:
 
 ```env
-# MongoDB - Sử dụng Docker service name
-MONGODB_URI=mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin
-
-# Server
+# Application
 NODE_ENV=development
 PORT=3000
-TZ=UTC  # Timezone UTC cho cả server và database
 
-# JWT (nếu dùng authentication)
-JWT_SECRET=your-secret-key
+# Database - Kết nối qua localhost
+MONGODB_URI=mongodb://admin:admin123@localhost:27017/keypicksvivu?authSource=admin
+
+# JWT
+JWT_SECRET=your-dev-jwt-secret-key-change-in-production
 JWT_EXPIRE=7d
 
-# API - Sử dụng relative URL
-API_BASE_URL=/api
+# API
+API_BASE_URL=http://localhost:3000/api
 ```
 
-**Lưu ý quan trọng:**
+**⚠️ Lưu ý:**
+- App chạy locally, kết nối MongoDB qua `localhost:27017`
+- Credentials chỉ dùng cho development
+- **Datetime: BẮT BUỘC sử dụng ISO8601 format** (xem [DATETIME_GUIDE.md](./DATETIME_GUIDE.md))
 
-- ✅ Sử dụng `mongodb` (service name) thay vì `localhost`
-- ✅ Timezone luôn là UTC trong containers
-- ✅ API_BASE_URL sử dụng relative path `/api`
-- ✅ **Datetime: BẮT BUỘC sử dụng ISO8601 format** (xem [DATETIME_GUIDE.md](./DATETIME_GUIDE.md))
+## 🔄 Typical Workflows
+
+### First Time Setup
+
+```bash
+# 1. Clone và install
+git clone <repo-url>
+cd KeypicksVIVU
+
+# 2. Run quick-start script (auto install, setup, start)
+chmod +x quick-start.sh
+./quick-start.sh
+
+# 3. Start app
+npm run dev
+
+# Note: Script đã tự động cài dependencies và seed database
+npm run seed
+
+# 5. Open browser
+open http://localhost:3000
+```
+
+### Daily Development
+
+```bash
+# 1. Khởi động MongoDB (nếu chưa chạy)
+./quick-start.sh
+
+# 2. Chạy app
+npm run dev
+
+# 3. Code...
+
+# 4. Dừng app (Ctrl+C)
+
+# 5. (Optional) Dừng MongoDB
+docker-compose down
+```
+
+### Database Testing
+
+```bash
+# 1. Seed fresh data
+npm run seed
+
+# 2. Test app...
+
+# 3. Nếu cần reset
+npm run seed:clear
+npm run seed
+```
+
+### CSS Changes
+
+```bash
+# 1. Start CSS watch mode (terminal 1)
+npm run watch:css
+
+# 2. Start app (terminal 2)
+npm run dev
+
+# 3. Edit HTML/CSS...
+# CSS sẽ tự động rebuild
+```
 
 ## 🐛 Common Issues
 
 ### MongoDB không kết nối được
 
 ```bash
-# Check MongoDB logs
-make logs-db
+# Check MongoDB is running
+docker ps
+
+# View logs
+docker-compose logs mongodb
 
 # Restart MongoDB
 docker-compose restart mongodb
+
+# Verify connection string in .env
+# Phải là: mongodb://admin:admin123@localhost:27017/...
 ```
 
-### App không chạy sau khi update code
+### Port 3000 đã được sử dụng
 
 ```bash
-# Restart app
-make restart-app
+# Tìm process đang dùng port
+# Windows
+netstat -ano | findstr :3000
+# Linux/Mac
+lsof -i :3000
 
-# Hoặc rebuild
-make dev-build
+# Kill process hoặc đổi PORT trong .env
+PORT=3001
 ```
 
 ### Database trống sau khi seed
 
 ```bash
 # Check seed logs
-docker-compose logs app | grep seed
+npm run seed
 
-# Seed lại
-make seed
+# Kiểm tra MongoDB đang chạy
+docker ps
+
+# Verify trong Mongo Express
+open http://localhost:8081
 ```
 
-### Port 3000 đã được sử dụng
+### CSS không update
 
 ```bash
-# Stop all containers
-make dev-down
+# Rebuild CSS
+npm run build:css
 
-# Hoặc edit .env để đổi PORT
-PORT=3001
+# Hoặc dùng watch mode
+npm run watch:css
+
+# Clear browser cache (Ctrl+F5)
 ```
 
-## 📚 Useful Commands Cheat Sheet
+### Hot reload không hoạt động
 
-| Command          | Description          |
-| ---------------- | -------------------- |
-| `make help`      | Xem tất cả commands  |
-| `make dev`       | Start development    |
-| `make dev-down`  | Stop development     |
-| `make seed`      | Seed database        |
-| `make db-reset`  | Reset database       |
-| `make db-backup` | Backup database      |
-| `make shell`     | Access app shell     |
-| `make db-shell`  | Access MongoDB shell |
-| `make logs-app`  | View app logs        |
-| `make health`    | Check API health     |
-| `make clean`     | Clean everything     |
+Nodemon đang watch các files:
+- `*.js`
+- `routes/**`
+- `models/**`
+- `middleware/**`
 
-## 🔄 Update Dependencies
-
+Nếu không hoạt động:
 ```bash
-# Access app shell
-make shell
+# Restart app manually
+# Ctrl+C rồi npm run dev lại
+```
 
-# Inside container
-npm install package-name
-npm install --save-dev dev-package-name
+## 📚 Project Structure
 
-# Exit shell
-exit
+```
+KeypicksVIVU/
+├── config/                    # Configuration files
+├── middleware/                # Express middleware
+├── models/                    # MongoDB models
+│   ├── Airport.js
+│   ├── Airline.js
+│   ├── Flight.js
+│   ├── Booking.js
+│   └── User.js
+├── routes/                    # API routes
+│   ├── flights.js
+│   ├── bookings.js
+│   ├── auth.js
+│   └── users.js
+├── scripts/                   # Utility scripts
+│   ├── seed.js               # Database seeding
+│   └── data/                 # JSON sample data
+├── ui/                        # Frontend files
+│   ├── css/
+│   ├── js/
+│   └── pages/
+├── server.js                  # Main server file
+├── docker-compose.yml         # MongoDB containers
+├── docker-compose.prod.yml    # Production setup
+├── Dockerfile                 # Production image
+├── quick-start.sh             # Quick start script (Linux/Mac)
+└── quick-start.ps1            # Quick start script (Windows)
+```
 
-# Rebuild (nếu cần)
-make dev-build
+## 📖 Useful Commands Cheat Sheet
+
+### DevContainer
+
+| Command | Description |
+| ------- | ----------- |
+| `F1 → "Reopen in Container"` | Mở project trong DevContainer |
+| `F1 → "Rebuild Container"` | Rebuild DevContainer |
+| `F1 → "Reopen Folder Locally"` | Thoát DevContainer |
+
+### MongoDB Services
+
+| Command | Description |
+| ------- | ----------- |
+| `./quick-start.sh` | Khởi động MongoDB & Mongo Express |
+| `make dev` | Khởi động MongoDB & Mongo Express (Makefile) |
+| `docker-compose down` | Dừng services |
+| `docker-compose logs -f` | Xem logs |
+| `make db-shell` | MongoDB shell |
+
+### App
+
+| Command | Description |
+| ------- | ----------- |
+| `npm run dev` | Chạy app (development với hot reload) |
+| `npm start` | Chạy app (production mode) |
+| `npm run seed` | Seed database |
+| `npm run seed:clear` | Xóa database |
+
+### CSS
+
+| Command | Description |
+| ------- | ----------- |
+| `npm run build:css` | Build Tailwind CSS |
+| `npm run watch:css` | Watch mode (auto-rebuild) |
+
+### Database
+
+| Command | Description |
+| ------- | ----------- |
+| `make db-backup` | Backup database |
+| `make db-restore FILE=...` | Restore database |
+| `make db-shell` | MongoDB shell |
+
+## 🔒 Security Notes
+
+### Development
+
+- MongoDB: `admin` / `admin123`
+- Mongo Express: `admin` / `admin123`
+
+⚠️ **CHỈ dùng cho development!**
+
+### Production
+
+Thay đổi trong `.env`:
+```env
+MONGO_ROOT_USERNAME=secure_username
+MONGO_ROOT_PASSWORD=very_strong_password_here
+JWT_SECRET=very-strong-jwt-secret-here
 ```
 
 ## 🚢 Deploy to Production
@@ -634,12 +888,16 @@ make prod-logs
 make prod-down
 ```
 
-## 📖 Additional Resources
+Xem chi tiết: [DEPLOYMENT.md](DEPLOYMENT.md)
 
-- **Setup Database**: [SETUP_DATABASE.md](SETUP_DATABASE.md)
-- **Migration Summary**: [MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md)
-- **Quick Start**: [START_HERE.md](START_HERE.md)
-- **Docker Guide**: [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
+## 📚 Additional Resources
+
+- **[README.md](../README.md)** - Tổng quan dự án
+- **[QUICKSTART.md](./QUICKSTART.md)** - Quick start guide
+- **[DATETIME_GUIDE.md](./DATETIME_GUIDE.md)** - Datetime handling
+- **[DATABASE_COMMANDS_GUIDE.md](./DATABASE_COMMANDS_GUIDE.md)** - Database commands
+- **[CSS_BUILD_GUIDE.md](./CSS_BUILD_GUIDE.md)** - CSS build guide
+- **🐳 DevContainer Development** - Xem section trên để setup môi trường development với VS Code DevContainer và MongoDB Extension
 
 ---
 

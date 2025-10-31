@@ -1,201 +1,161 @@
 # Docker Guide - KeypicksVIVU
 
-> Hướng dẫn sử dụng Docker scripts và xử lý các vấn đề khi làm việc với Docker
+> Hướng dẫn sử dụng Docker cho Development và Production
 
 ## 📋 Yêu cầu hệ thống
 
 - **Docker Engine** 20.10+
 - **Docker Compose** 2.0+
-- **Make** (optional, để dùng Makefile commands)
 
-## 🚀 Docker Scripts - Cách sử dụng
+## 🏗️ Kiến Trúc Docker
 
-Dự án cung cấp Docker management scripts cho cả Linux/Mac và Windows để quản lý môi trường development và production dễ dàng.
+### Hai môi trường Docker
 
-### Linux/Mac: `docker.sh`
+| File                    | Mục đích         | Services                          |
+| ----------------------- | ---------------- | --------------------------------- |
+| `docker-compose.yml`    | **Development/DevContainer** | MongoDB + App (không build) + Mongo Express |
+| `docker-compose.prod.yml` | **Production**   | MongoDB + App (build từ Dockerfile) |
+
+### Development Environment (docker-compose.yml)
+
+Dành cho **DevContainer** và development:
+
+| Service       | Container Name                  | Port  | Purpose           |
+| ------------- | ------------------------------- | ----- | ----------------- |
+| App           | keypicksvivu-app-dev            | 3000  | Node.js App (volume mount) |
+| MongoDB       | keypicksvivu-mongodb-dev        | 27017 | Database          |
+| Mongo Express | keypicksvivu-mongo-express      | 8081  | Database Admin UI |
+
+**Đặc điểm:**
+- ✅ App **KHÔNG build** - sử dụng `node:24-alpine` image
+- ✅ Source code được mount từ host (volume: `.:/app`)
+- ✅ Chạy `npm run dev` với hot-reload
+- ✅ Có Mongo Express để quản lý database
+- ✅ Phù hợp cho DevContainer và local development
+
+### Production Environment (docker-compose.prod.yml)
+
+Dành cho **Production deployment**:
+
+| Service       | Container Name                  | Port  | Purpose           |
+| ------------- | ------------------------------- | ----- | ----------------- |
+| App           | keypicksvivu-app-prod           | 3000  | Node.js App (built) |
+| MongoDB       | keypicksvivu-mongodb-prod       | 27017 | Database          |
+
+**Đặc điểm:**
+- ✅ App được **BUILD** từ Dockerfile
+- ✅ Không có Mongo Express (security)
+- ✅ Environment variables từ `.env`
+- ✅ Health checks và restart policies
+- ✅ Production-ready configuration
+
+## 🚀 Các Lệnh Docker
+
+### 🔧 Development (DevContainer)
+
+#### Quick Start Script
+
+**Cách nhanh nhất:**
+```bash
+./quick-start.sh    # Linux/Mac
+```
+
+Script sẽ:
+- ✅ Tạo `.env` file (nếu chưa có)
+- ✅ Khởi động tất cả services (App + MongoDB + Mongo Express)
+- ✅ Hiển thị thông tin services
+
+#### Makefile Commands
 
 ```bash
-# Cấp quyền thực thi (chỉ cần làm 1 lần)
-chmod +x docker.sh
+# Khởi động toàn bộ development stack
+make dev
 
-# Sử dụng
-./docker.sh [command]
+# Dừng services
+make dev-down
+
+# Xem logs
+make dev-logs
+
+# Truy cập MongoDB shell
+make db-shell
+
+# Backup database
+make db-backup
+
+# Restore database
+make db-restore FILE=backups/file.dump
+
+# Xem status
+make ps
+
+# Dọn dẹp (xóa containers và volumes)
+make clean
 ```
 
-### Windows: `docker.ps1`
-
-```powershell
-# Nếu gặp lỗi ExecutionPolicy
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-
-# Sử dụng
-.\docker.ps1 [command]
-```
-
-## 📝 Các lệnh Docker Scripts
-
-### Development Commands
-
-#### `dev` - Khởi động môi trường development
-```bash
-./docker.sh dev          # Linux/Mac
-.\docker.ps1 dev         # Windows
-```
-- Khởi động tất cả services (app, MongoDB, Mongo Express)
-- Timezone: UTC trong tất cả containers
-- Hot reload enabled
-- Logs hiển thị real-time
-
-#### `dev-build` - Rebuild và khởi động development
-```bash
-./docker.sh dev-build    # Linux/Mac
-.\docker.ps1 dev-build   # Windows
-```
-- Rebuild Docker images từ đầu
-- Dùng khi có thay đổi Dockerfile hoặc dependencies
-
-#### `dev-down` - Dừng môi trường development
-```bash
-./docker.sh dev-down     # Linux/Mac
-.\docker.ps1 dev-down    # Windows
-```
-- Dừng tất cả containers
-- Không xóa volumes (data được giữ lại)
-
-#### `dev-logs` - Xem logs development
-```bash
-./docker.sh dev-logs     # Linux/Mac
-.\docker.ps1 dev-logs    # Windows
-```
-- Xem logs real-time của tất cả services
-- Ctrl+C để thoát
-
-### Production Commands
-
-#### `prod` - Khởi động môi trường production
-```bash
-./docker.sh prod         # Linux/Mac
-.\docker.ps1 prod        # Windows
-```
-- Yêu cầu file `.env` tồn tại
-- Chạy containers ở background (-d)
-- Sử dụng `docker-compose.prod.yml`
-
-#### `prod-build` - Rebuild và khởi động production
-```bash
-./docker.sh prod-build   # Linux/Mac
-.\docker.ps1 prod-build  # Windows
-```
-- Build production images với multi-stage Dockerfile
-- Optimized cho performance
-
-#### `prod-down` - Dừng môi trường production
-```bash
-./docker.sh prod-down    # Linux/Mac
-.\docker.ps1 prod-down   # Windows
-```
-
-#### `prod-logs` - Xem logs production
-```bash
-./docker.sh prod-logs    # Linux/Mac
-.\docker.ps1 prod-logs   # Windows
-```
-
-### Utility Commands
-
-#### `shell` - Truy cập app container shell
-```bash
-./docker.sh shell        # Linux/Mac
-.\docker.ps1 shell       # Windows
-```
-- Mở shell (sh) trong app container
-- Dùng để chạy npm commands, debug, inspect files
-
-#### `db-shell` - Truy cập MongoDB shell
-```bash
-./docker.sh db-shell     # Linux/Mac
-.\docker.ps1 db-shell    # Windows
-```
-- Mở mongosh trong MongoDB container
-- Tự động authenticate với admin credentials
-- Timezone: UTC
-
-#### `health` - Kiểm tra health của ứng dụng
-```bash
-./docker.sh health       # Linux/Mac
-.\docker.ps1 health      # Windows
-```
-- Test API health endpoint: `http://localhost:3000/api/health`
-- Hiển thị status và response JSON
-
-#### `stats` - Xem resource usage
-```bash
-./docker.sh stats        # Linux/Mac
-.\docker.ps1 stats       # Windows
-```
-- Hiển thị CPU, Memory, Network I/O của containers
-- Real-time monitoring
-
-#### `seed` - Seed database (chỉ Linux/Mac)
-```bash
-./docker.sh seed
-```
-- Seed database với Vietnam timezone data
-- Tự động convert từ Asia/Ho_Chi_Minh (UTC+7) sang UTC
-- Dùng cho development environment
-
-#### `timezone` hoặc `tz` - Kiểm tra timezone (chỉ Linux/Mac)
-```bash
-./docker.sh timezone
-./docker.sh tz
-```
-- Kiểm tra timezone trong app và MongoDB containers
-- Verify cả hai đều ở UTC
-
-#### `clean` - Dọn dẹp Docker
-```bash
-./docker.sh clean        # Linux/Mac
-.\docker.ps1 clean       # Windows
-```
-- ⚠️ **Cẩn thận**: Xóa tất cả containers, volumes, và images
-- **Data sẽ bị mất** - chỉ dùng khi muốn reset hoàn toàn
-
-#### `help` - Hiển thị trợ giúp
-```bash
-./docker.sh help         # Linux/Mac
-.\docker.ps1 help        # Windows
-```
-
-## 🛠️ Makefile Commands
-
-Nếu bạn có `make` installed, có thể dùng các commands ngắn gọn hơn:
+#### Docker Compose Trực Tiếp
 
 ```bash
-# Development
-make dev                 # Khởi động dev environment
-make dev-build          # Rebuild và khởi động
-make down               # Dừng containers
-make logs               # Xem logs
+# Khởi động toàn bộ stack (App + MongoDB + Mongo Express)
+docker-compose up -d
 
-# Production
-make prod               # Khởi động production
-make prod-build         # Build và khởi động production
-make prod-down          # Dừng production
+# Chỉ khởi động MongoDB và Mongo Express
+docker-compose up -d mongodb mongo-express
 
-# Utilities
-make shell              # Truy cập app shell
-make db-shell           # Truy cập MongoDB shell
-make seed               # Seed database
-make timezone           # Kiểm tra timezone
-make health             # Health check
-make clean              # Dọn dẹp (xóa volumes)
-make prune              # Dọn dẹp (giữ volumes)
+# Dừng
+docker-compose down
 
-# Xem tất cả commands
-make help
+# Xem logs
+docker-compose logs -f
+
+# Xem logs của một service cụ thể
+docker-compose logs -f app
+docker-compose logs -f mongodb
+
+# Restart services
+docker-compose restart app
+docker-compose restart mongodb
+
+# Xem status
+docker-compose ps
+
+# Xóa toàn bộ (bao gồm data)
+docker-compose down -v
 ```
 
-## 🔧 Troubleshooting - Xử lý lỗi Docker
+### 🚀 Production
+
+#### Docker Compose Production Commands
+
+```bash
+# Khởi động production stack
+docker-compose -f docker-compose.prod.yml up -d
+
+# Build và khởi động
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Xem logs
+docker-compose -f docker-compose.prod.yml logs -f
+
+# Dừng
+docker-compose -f docker-compose.prod.yml down
+
+# Xem status
+docker-compose -f docker-compose.prod.yml ps
+
+# Rebuild app
+docker-compose -f docker-compose.prod.yml build app
+
+# Restart app only
+docker-compose -f docker-compose.prod.yml restart app
+```
+
+**Lưu ý Production:**
+- ⚠️ Đảm bảo file `.env` có đầy đủ production credentials
+- ⚠️ Thay đổi `MONGO_ROOT_PASSWORD` và `JWT_SECRET`
+- ⚠️ Không expose port MongoDB ra ngoài nếu không cần thiết
+
+## 🔧 Troubleshooting
 
 ### 1. Port đã được sử dụng
 
@@ -209,12 +169,12 @@ Error: bind: address already in use
 **Kiểm tra port đang dùng:**
 ```bash
 # Windows
-netstat -ano | findstr :3000
 netstat -ano | findstr :27017
+netstat -ano | findstr :8081
 
 # Linux/Mac
-lsof -i :3000
 lsof -i :27017
+lsof -i :8081
 ```
 
 **Dừng process đang dùng port:**
@@ -229,12 +189,17 @@ kill -9 <PID>
 **Hoặc đổi port trong `docker-compose.yml`:**
 ```yaml
 services:
-  app:
+  mongodb:
     ports:
-      - "3001:3000"  # Thay vì 3000:3000
+      - "27018:27017"  # Thay vì 27017:27017
 ```
 
-### 2. MongoDB connection error
+Nhớ update MONGODB_URI trong `.env`:
+```env
+MONGODB_URI=mongodb://admin:admin123@localhost:27018/keypicksvivu?authSource=admin
+```
+
+### 2. MongoDB connection error từ app
 
 **Triệu chứng:**
 ```
@@ -246,105 +211,45 @@ MongoNetworkError: connect ECONNREFUSED
 
 **1. Kiểm tra MongoDB đã khởi động:**
 ```bash
-docker-compose ps
+docker ps | grep mongodb
+```
+
+**2. Xem logs MongoDB:**
+```bash
 docker-compose logs mongodb | grep "Waiting for connections"
 ```
 
-**2. Restart MongoDB và app:**
+**3. Restart MongoDB:**
 ```bash
 docker-compose restart mongodb
-sleep 5
-docker-compose restart app
 ```
 
-**3. Kiểm tra kết nối network:**
-```bash
-docker-compose exec app ping -c 2 mongodb
-```
+**4. Verify connection string:**
 
-**4. Verify MONGODB_URI trong `.env`:**
+**Development (app trong Docker):**
 ```env
-# ✅ Đúng - dùng service name
+# ✅ Đúng - app chạy trong Docker, dùng service name
 MONGODB_URI=mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin
+```
 
-# ❌ Sai - không dùng localhost trong Docker
+**Local development (app chạy ngoài Docker):**
+```env
+# ✅ Đúng - app chạy locally, kết nối qua localhost
 MONGODB_URI=mongodb://admin:admin123@localhost:27017/keypicksvivu?authSource=admin
 ```
 
 **5. Reset hoàn toàn:**
 ```bash
+# Development
 docker-compose down -v
-docker-compose up --build
+docker-compose up -d
+
+# Production
+docker-compose -f docker-compose.prod.yml down -v
+docker-compose -f docker-compose.prod.yml up -d
 ```
 
-### 3. Hot reload không hoạt động
-
-**Triệu chứng:**
-- Code thay đổi nhưng app không tự động restart
-- Phải restart container thủ công
-
-**Giải pháp:**
-
-**Trên Windows - Bật polling trong `package.json`:**
-```json
-{
-  "nodemonConfig": {
-    "legacyWatch": true,
-    "watch": ["*.js", "routes/**", "models/**", "middleware/**"],
-    "ext": "js,json"
-  }
-}
-```
-
-**Kiểm tra volumes được mount đúng:**
-```yaml
-# docker-compose.yml
-volumes:
-  - .:/app
-  - /app/node_modules
-```
-
-**Restart container:**
-```bash
-docker-compose restart app
-```
-
-### 4. Timezone không đúng
-
-**Triệu chứng:**
-- Timestamps không đúng
-- Database query theo time không hoạt động
-
-**Giải pháp:**
-
-**Kiểm tra timezone:**
-```bash
-# Linux/Mac
-./docker.sh timezone
-
-# Hoặc manual
-docker-compose exec app date
-docker-compose exec mongodb date
-```
-
-**Cả hai phải hiển thị UTC:**
-```
-Sat Oct 25 10:30:45 UTC 2025
-```
-
-**Nếu không đúng, rebuild:**
-```bash
-docker-compose down
-docker-compose up --build
-```
-
-**Verify Dockerfile có set timezone:**
-```dockerfile
-ENV TZ=UTC
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-```
-
-### 5. Container không khởi động
+### 3. Container không khởi động
 
 **Triệu chứng:**
 ```
@@ -355,58 +260,45 @@ container exited with code 1
 
 **1. Xem logs để tìm lỗi:**
 ```bash
-docker-compose logs app
 docker-compose logs mongodb
+docker-compose logs mongo-express
 ```
 
-**2. Kiểm tra file `.env` tồn tại:**
-```bash
-ls -la .env
-
-# Nếu không có, tạo từ template
-cp env.example .env
-```
-
-**3. Kiểm tra syntax errors trong code:**
-```bash
-# Truy cập container shell
-docker-compose exec app sh
-
-# Test chạy app manually
-node server.js
-```
-
-**4. Rebuild từ đầu:**
+**2. Rebuild từ đầu:**
 ```bash
 docker-compose down -v
-docker-compose build --no-cache
-docker-compose up
+docker-compose pull
+docker-compose up -d
 ```
 
-### 6. Quyền truy cập files (Linux/Mac)
+### 4. Mongo Express không truy cập được
 
 **Triệu chứng:**
-```
-EACCES: permission denied
-```
+- Container đang chạy nhưng không truy cập được http://localhost:8081
 
 **Giải pháp:**
 
-**Kiểm tra ownership:**
+**1. Kiểm tra container status:**
 ```bash
-ls -la
+docker ps | grep mongo-express
 ```
 
-**Sửa permissions:**
+**2. Xem logs:**
 ```bash
-# Cho phép user hiện tại access
-sudo chown -R $USER:$USER .
-
-# Hoặc thay đổi UID trong Dockerfile
-RUN adduser --system --uid $(id -u) nodejs
+docker-compose logs mongo-express
 ```
 
-### 7. Disk space đầy
+**3. Restart Mongo Express:**
+```bash
+docker-compose restart mongo-express
+```
+
+**4. Verify MongoDB đang chạy:**
+```bash
+docker-compose ps
+```
+
+### 5. Disk space đầy
 
 **Triệu chứng:**
 ```
@@ -425,152 +317,182 @@ docker system df
 # Xóa unused containers, images, networks
 docker system prune -a
 
-# Xóa unused volumes (cẩn thận!)
+# Xóa unused volumes (cẩn thận - sẽ mất data!)
 docker volume prune
 
-# Hoặc dùng script
-./docker.sh clean
+# Hoặc dùng make command
+make clean
 ```
 
-### 8. Build quá chậm
-
-**Giải pháp:**
-
-**1. Sử dụng BuildKit:**
-```bash
-# Linux/Mac
-DOCKER_BUILDKIT=1 docker-compose build
-
-# Windows
-$env:DOCKER_BUILDKIT=1
-docker-compose build
-```
-
-**2. Build specific service:**
-```bash
-docker-compose build app
-```
-
-**3. Use cache hiệu quả - kiểm tra `.dockerignore`:**
-```
-node_modules
-npm-debug.log
-.env
-.git
-```
-
-### 9. Container chạy nhưng không truy cập được
+### 6. Data bị mất sau khi restart
 
 **Triệu chứng:**
-- `docker ps` hiển thị container đang chạy
-- Không truy cập được `http://localhost:3000`
+- Database trống sau khi restart containers
 
 **Giải pháp:**
 
-**1. Kiểm tra ports mapping:**
+**Kiểm tra volumes:**
 ```bash
-docker-compose ps
+docker volume ls | grep mongodb
 ```
-Phải thấy: `0.0.0.0:3000->3000/tcp`
 
-**2. Kiểm tra app đang listen đúng port:**
+**Không dùng `-v` khi stop:**
 ```bash
-docker-compose logs app | grep "Server is running"
+# ✅ Đúng - giữ data
+docker-compose down
+
+# ❌ Sai - xóa data
+docker-compose down -v
 ```
 
-**3. Kiểm tra firewall:**
+**Restore từ backup:**
 ```bash
-# Windows
-netsh advfirewall firewall show rule name=all | findstr 3000
-
-# Linux
-sudo ufw status
+make db-restore FILE=backups/keypicksvivu_YYYYMMDD_HHMMSS.dump
 ```
 
-**4. Test từ trong container:**
-```bash
-docker-compose exec app wget -O- http://localhost:3000/api/health
-```
-
-### 10. PowerShell Execution Policy Error (Windows)
-
-**Triệu chứng:**
-```
-cannot be loaded because running scripts is disabled on this system
-```
+### 7. Container chạy chậm
 
 **Giải pháp:**
 
-**Cho session hiện tại:**
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-.\docker.ps1 dev
+**Xem resource usage:**
+```bash
+docker stats
+
+# Hoặc dùng make
+make stats
 ```
 
-**Cho user hiện tại (persistent):**
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
+**Tăng resources cho Docker Desktop:**
+- Mở Docker Desktop > Settings > Resources
+- Tăng CPU và Memory allocation
 
-**Hoặc chạy trực tiếp:**
-```powershell
-powershell -ExecutionPolicy Bypass -File .\docker.ps1 dev
+**Giới hạn MongoDB cache size** (đã được set trong docker-compose.yml):
+```yaml
+command: --wiredTigerCacheSizeGB 1.5
 ```
 
 ## 📦 Cấu trúc Docker Files
 
 ```
 KeypicksVIVU/
-├── Dockerfile                      # Production build (multi-stage)
-├── Dockerfile.dev                  # Development build (hot reload)
-├── docker-compose.yml              # Dev environment config
-├── docker-compose.prod.yml         # Production environment config
-├── docker-compose.override.yml.example  # Local overrides template
-├── .dockerignore                   # Files to ignore in build
-├── docker.sh                       # Linux/Mac management script
-└── docker.ps1                      # Windows management script
+├── docker-compose.yml         # Development/DevContainer
+├── docker-compose.prod.yml    # Production deployment
+├── Dockerfile                 # Production build image
+└── .dockerignore              # Files to ignore in build
 ```
 
-### Dockerfile (Production)
+### docker-compose.yml (Development/DevContainer)
 
-- **Multi-stage build** để giảm image size
-- Alpine Linux base image (nhẹ)
-- Non-root user cho security
-- Health check included
+**Mục đích:** Development environment và DevContainer
 
-### Dockerfile.dev (Development)
+**Services:**
 
-- Hot reload với nodemon
-- Dev dependencies included
-- Source code mounted as volume
-- Better for debugging
+1. **app**: Node.js Application
+   - Image: `node:24-alpine` (không build)
+   - Port: `3000`
+   - Volume mount: `.:/app` (hot-reload)
+   - Command: `npm run dev`
+   - Environment: Development mode
 
-### docker-compose.yml (Development)
+2. **mongodb**: MongoDB 7.0
+   - Port: `27017`
+   - Credentials: `admin` / `admin123`
+   - Volume: `mongodb_data` (persistent storage)
+   - Health check: enabled
 
-Services:
-- **app**: Express server (port 3000)
-- **mongodb**: MongoDB 7.0 (port 27017)
-- **mongo-express**: Database UI (port 8081)
+3. **mongo-express**: MongoDB Admin UI
+   - Port: `8081`
+   - Credentials: `admin` / `admin123`
+   - Accessible at: http://localhost:8081
+
+**Đặc điểm:**
+- ✅ Source code được mount từ host
+- ✅ Hot-reload với nodemon
+- ✅ Development tools included
+- ✅ Mongo Express cho database management
 
 ### docker-compose.prod.yml (Production)
 
-- Production-optimized configs
-- No mongo-express
-- Resource limits
-- Restart policies
+**Mục đích:** Production deployment
+
+**Services:**
+
+1. **app**: Node.js Application
+   - Build: từ `Dockerfile`
+   - Port: `3000`
+   - Environment: Production mode
+   - Health check: enabled
+   - Restart: always
+
+2. **mongodb**: MongoDB 7.0
+   - Port: `27017`
+   - Credentials: từ environment variables
+   - Volume: `mongodb_data` (persistent storage)
+   - Auth: enabled
+
+**Đặc điểm:**
+- ✅ App được build từ source
+- ✅ Optimized for production
+- ✅ No development tools
+- ✅ No Mongo Express (security)
+- ✅ Environment từ `.env` file
+
+## 🧑‍💻 DevContainer Usage
+
+### Sử dụng với VSCode
+
+**docker-compose.yml** được thiết kế để làm việc với DevContainer trong VSCode:
+
+1. **Mở project trong DevContainer:**
+   - Install extension: `Remote - Containers`
+   - Command Palette (Ctrl+Shift+P): `Dev Containers: Reopen in Container`
+
+2. **App service sẽ:**
+   - Mount source code từ host (`.:/app`)
+   - Chạy `npm run dev` tự động
+   - Hot-reload khi code thay đổi
+   - Kết nối MongoDB qua service name `mongodb`
+
+3. **Lợi ích của DevContainer:**
+   - ✅ Môi trường development nhất quán
+   - ✅ Không cần cài Node.js trên host
+   - ✅ Tất cả dependencies trong container
+   - ✅ Dễ dàng onboard team members
+   - ✅ Hot-reload và debugging
+
+### Workflow Development
+
+```bash
+# 1. Start development environment
+docker-compose up -d
+
+# 2. Xem logs để debug
+docker-compose logs -f app
+
+# 3. Access app container shell
+docker-compose exec app sh
+
+# 4. Chạy npm commands trong container
+docker-compose exec app npm install
+docker-compose exec app npm test
+
+# 5. Restart app khi cần
+docker-compose restart app
+```
+
+### DevContainer vs Local Development
+
+| Aspect                | DevContainer (docker-compose.yml) | Local Development        |
+| --------------------- | --------------------------------- | ------------------------ |
+| Node.js cài đặt       | ❌ Không cần                      | ✅ Phải cài              |
+| Dependencies          | Trong container                    | Trên host machine        |
+| MongoDB connection    | `mongodb:27017` (service name)    | `localhost:27017`        |
+| Code changes          | Hot-reload (volume mount)          | Hot-reload (local)       |
+| Môi trường            | Consistent (Docker image)          | Varies by developer      |
 
 ## 🐳 Docker Best Practices
 
-### 1. Environment Variables
-
-```bash
-# ✅ Tốt - dùng .env file
-docker-compose up
-
-# ❌ Tránh - hardcode trong docker-compose.yml
-```
-
-### 2. Data Persistence
+### 1. Data Persistence
 
 ```bash
 # ✅ Giữ data khi dừng
@@ -580,29 +502,17 @@ docker-compose down
 docker-compose down -v
 ```
 
-### 3. Network
+### 2. Backup trước khi xóa data
 
 ```bash
-# ✅ Trong containers - dùng service names
-MONGODB_URI=mongodb://admin:admin123@mongodb:27017
+# Backup
+make db-backup
 
-# ✅ Từ host machine - dùng localhost
-http://localhost:3000
-
-# ❌ Tránh - dùng IP addresses
-MONGODB_URI=mongodb://admin:admin123@172.18.0.2:27017
+# Sau đó mới xóa
+docker-compose down -v
 ```
 
-### 4. Timezone
-
-```bash
-# ✅ Luôn dùng UTC trong containers
-TZ=UTC
-
-# ✅ Seed data tự động convert từ Vietnam time sang UTC
-```
-
-### 5. Security
+### 3. Security
 
 ```bash
 # ✅ Không commit .env file
@@ -610,25 +520,23 @@ echo ".env" >> .gitignore
 
 # ✅ Thay đổi passwords trong production
 MONGO_ROOT_PASSWORD=strong-password-here
-
-# ✅ Sử dụng secrets cho production
-docker secret create mongo_password ./mongo_password.txt
 ```
 
-### 6. Resource Management
+### 4. Resource Management
+
+Giới hạn resources trong production:
 
 ```yaml
-# docker-compose.prod.yml
 services:
-  app:
+  mongodb:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
+          cpus: '1.0'
+          memory: 2G
 ```
 
-### 7. Logging
+### 5. Logging
 
 ```bash
 # Xem logs với timestamps
@@ -638,73 +546,205 @@ docker-compose logs -f -t
 docker-compose logs --tail=100
 
 # Specific service
-docker-compose logs -f app
+docker-compose logs -f mongodb
 ```
-
-## 🔐 Security Checklist
-
-- [ ] File `.env` không được commit vào Git
-- [ ] Thay đổi tất cả passwords mặc định trong production
-- [ ] Sử dụng secrets management (Docker Secrets, Vault)
-- [ ] Giới hạn network exposure - chỉ expose ports cần thiết
-- [ ] Regular updates - cập nhật base images thường xuyên
-- [ ] Scan images - `docker scan <image>` để tìm vulnerabilities
-- [ ] Non-root user trong containers
-- [ ] Read-only filesystem khi có thể
 
 ## 📚 Truy cập Services
 
-### Development Environment
+### Development Environment (docker-compose.yml)
 
-| Service | URL | Credentials |
-|---------|-----|-------------|
-| App | http://localhost:3000 | - |
-| Mongo Express | http://localhost:8081 | admin / admin123 |
-| MongoDB | localhost:27017 | admin / admin123 |
-| Health Check | http://localhost:3000/api/health | - |
+| Service       | URL                       | Credentials      | Access From     |
+| ------------- | ------------------------- | ---------------- | --------------- |
+| App           | http://localhost:3000     | -                | Host/Browser    |
+| MongoDB       | mongodb://localhost:27017 | admin / admin123 | Host            |
+| Mongo Express | http://localhost:8081     | admin / admin123 | Browser         |
 
-### Production Environment
+### Production Environment (docker-compose.prod.yml)
 
-| Service | URL | Credentials |
-|---------|-----|-------------|
-| App | http://localhost:3000 | - |
-| MongoDB | localhost:27017 | From `.env` |
-| Health Check | http://localhost:3000/api/health | - |
+| Service       | URL                       | Credentials         | Access From     |
+| ------------- | ------------------------- | ------------------- | --------------- |
+| App           | http://localhost:3000     | -                   | Host/Browser    |
+| MongoDB       | mongodb://localhost:27017 | From `.env` file    | Host            |
+
+### MongoDB Connection Strings
+
+#### Development
+
+**Từ app trong DevContainer (docker-compose.yml):**
+```
+mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin
+```
+
+**Từ host machine (khi test locally):**
+```
+mongodb://admin:admin123@localhost:27017/keypicksvivu?authSource=admin
+```
+
+**Từ MongoDB shell:**
+```bash
+# Từ host
+mongosh mongodb://admin:admin123@localhost:27017/?authSource=admin
+
+# Từ trong container
+docker-compose exec mongodb mongosh -u admin -p admin123 --authenticationDatabase admin
+```
+
+#### Production
+
+**Từ app (trong docker-compose.prod.yml):**
+```
+mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb:27017/keypicksvivu?authSource=admin
+```
+
+**Lưu ý:** Thay đổi credentials trong `.env` file cho production!
 
 ## 🎯 Quick Commands Reference
 
+### Development Commands
+
 ```bash
-# === Khởi động nhanh ===
-./docker.sh dev              # Start dev
-make dev                     # Start dev (Makefile)
+# === Khởi động ===
+./quick-start.sh              # Quick start (recommended)
+make dev                      # Start với Makefile
+docker-compose up -d          # Start all services
 
 # === Kiểm tra status ===
-docker-compose ps            # List containers
-./docker.sh health           # Health check
-./docker.sh stats            # Resource usage
+docker ps                     # List containers
+make ps                       # Status (Makefile)
+docker-compose ps             # Status với compose
 
 # === Xem logs ===
-./docker.sh dev-logs         # All logs
-docker-compose logs -f app   # App logs only
-docker-compose logs -f mongodb  # MongoDB logs only
+make dev-logs                 # All logs
+docker-compose logs -f        # All logs (live)
+docker-compose logs -f app    # App only
+docker-compose logs -f mongodb  # MongoDB only
 
-# === Truy cập containers ===
-./docker.sh shell            # App shell
-./docker.sh db-shell         # MongoDB shell
-docker-compose exec app sh   # App shell (direct)
+# === Truy cập MongoDB ===
+make db-shell                 # MongoDB shell
+docker-compose exec mongodb mongosh -u admin -p admin123
 
 # === Database ===
-./docker.sh seed             # Seed database
-make seed                    # Seed (Makefile)
+make db-backup                # Backup database
+make db-restore FILE=...      # Restore
 
 # === Dừng & Dọn dẹp ===
-./docker.sh dev-down         # Stop containers
-./docker.sh clean            # Clean all (remove volumes)
-docker-compose down -v       # Stop and remove volumes
+make dev-down                 # Stop containers
+docker-compose down           # Stop (keep data)
+docker-compose down -v        # Stop and remove data
+make clean                    # Clean all
+```
 
-# === Rebuild ===
-./docker.sh dev-build        # Rebuild dev
-docker-compose build --no-cache  # Rebuild without cache
+### Production Commands
+
+```bash
+# === Khởi động ===
+docker-compose -f docker-compose.prod.yml up -d          # Start
+docker-compose -f docker-compose.prod.yml up -d --build  # Build & start
+
+# === Kiểm tra status ===
+docker-compose -f docker-compose.prod.yml ps             # Status
+
+# === Xem logs ===
+docker-compose -f docker-compose.prod.yml logs -f        # All logs
+docker-compose -f docker-compose.prod.yml logs -f app    # App only
+
+# === Build ===
+docker-compose -f docker-compose.prod.yml build app      # Rebuild app
+
+# === Restart ===
+docker-compose -f docker-compose.prod.yml restart app    # Restart app
+docker-compose -f docker-compose.prod.yml restart        # Restart all
+
+# === Dừng ===
+docker-compose -f docker-compose.prod.yml down           # Stop
+docker-compose -f docker-compose.prod.yml down -v        # Stop & remove data
+```
+
+## 🚀 Production Deployment Guide
+
+### Chuẩn bị Deploy Production
+
+1. **Tạo `.env` file cho production:**
+
+```env
+# MongoDB
+MONGO_ROOT_USERNAME=your_secure_username
+MONGO_ROOT_PASSWORD=your_secure_password_here
+
+# JWT
+JWT_SECRET=your_very_long_random_secret_key_here
+JWT_EXPIRE=7d
+
+# Node
+NODE_ENV=production
+PORT=3000
+```
+
+2. **Build và khởi động:**
+
+```bash
+# Build app từ Dockerfile
+docker-compose -f docker-compose.prod.yml build
+
+# Start services
+docker-compose -f docker-compose.prod.yml up -d
+
+# Verify services đang chạy
+docker-compose -f docker-compose.prod.yml ps
+```
+
+3. **Kiểm tra health:**
+
+```bash
+# Check app health
+curl http://localhost:3000/api/health
+
+# Check logs
+docker-compose -f docker-compose.prod.yml logs -f app
+```
+
+### Production Checklist
+
+- ✅ Thay đổi tất cả default passwords
+- ✅ Sử dụng strong JWT_SECRET
+- ✅ Setup firewall rules
+- ✅ Configure backup schedule
+- ✅ Setup monitoring và logging
+- ✅ Use HTTPS/SSL (reverse proxy)
+- ✅ Limit MongoDB access (không expose public)
+- ✅ Regular security updates
+
+### Zero-Downtime Deployment
+
+```bash
+# 1. Build new version
+docker-compose -f docker-compose.prod.yml build app
+
+# 2. Scale up (optional, nếu có load balancer)
+# docker-compose -f docker-compose.prod.yml up -d --scale app=2
+
+# 3. Rolling restart
+docker-compose -f docker-compose.prod.yml up -d --no-deps --build app
+
+# 4. Verify
+docker-compose -f docker-compose.prod.yml ps
+docker-compose -f docker-compose.prod.yml logs -f app
+```
+
+### Monitoring Production
+
+```bash
+# Xem resource usage
+docker stats
+
+# Xem logs real-time
+docker-compose -f docker-compose.prod.yml logs -f
+
+# Export logs
+docker-compose -f docker-compose.prod.yml logs --since 24h > logs.txt
+
+# Check health status
+docker-compose -f docker-compose.prod.yml ps
 ```
 
 ## 📖 Tài liệu liên quan
@@ -712,35 +752,59 @@ docker-compose build --no-cache  # Rebuild without cache
 - **[README.md](../README.md)** - Tổng quan dự án
 - **[QUICKSTART.md](./QUICKSTART.md)** - Hướng dẫn khởi động nhanh
 - **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** - Development practices
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Production deployment
-- **[DATETIME_GUIDE.md](./DATETIME_GUIDE.md)** - Datetime & timezone handling
 - **[DATABASE_COMMANDS_GUIDE.md](./DATABASE_COMMANDS_GUIDE.md)** - MongoDB commands
 
 ## 🆘 Cần thêm trợ giúp?
 
 1. **Kiểm tra logs:**
    ```bash
-   ./docker.sh dev-logs
+   docker-compose logs -f
    ```
 
-2. **Health check:**
-   ```bash
-   ./docker.sh health
-   ```
-
-3. **Rebuild từ đầu:**
+2. **Rebuild từ đầu:**
    ```bash
    docker-compose down -v
-   docker-compose up --build
+   docker-compose up -d
    ```
 
-4. **Tham khảo documentation:**
+3. **Tham khảo documentation:**
    - [Docker Documentation](https://docs.docker.com/)
    - [Docker Compose Documentation](https://docs.docker.com/compose/)
-   - [Node.js Docker Best Practices](https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md)
    - [MongoDB Docker Documentation](https://hub.docker.com/_/mongo)
+
+## 📊 Tóm tắt: Development vs Production
+
+### Sự khác biệt chính
+
+| Feature                    | Development (`docker-compose.yml`) | Production (`docker-compose.prod.yml`) |
+| -------------------------- | ---------------------------------- | -------------------------------------- |
+| **App Container**          | `node:24-alpine` (no build)        | Build từ `Dockerfile`                  |
+| **Source Code**            | Volume mount (`.:/app`)            | Copied vào image                       |
+| **Hot Reload**             | ✅ Yes                             | ❌ No                                  |
+| **Mongo Express**          | ✅ Included                        | ❌ Not included                        |
+| **Environment**            | Hardcoded dev values               | Từ `.env` file                         |
+| **Restart Policy**         | `unless-stopped`                   | `always`                               |
+| **Health Checks**          | MongoDB only                       | App + MongoDB                          |
+| **Security**               | Development-friendly               | Production-hardened                    |
+| **Build Time**             | ⚡ Fast (no build)                 | 🐢 Slower (build required)             |
+| **Use Case**               | DevContainer, Local Dev            | Production Deployment                  |
+
+### Khi nào dùng gì?
+
+**Dùng `docker-compose.yml` khi:**
+- 🧑‍💻 Development và testing
+- 🔧 Làm việc với DevContainer trong VSCode
+- 🔄 Cần hot-reload
+- 🗄️ Cần Mongo Express để quản lý database
+- ⚡ Muốn start nhanh không cần build
+
+**Dùng `docker-compose.prod.yml` khi:**
+- 🚀 Deploy lên production server
+- 🔒 Cần security và stability
+- 📦 Muốn package app thành image
+- 🎯 Không cần development tools
+- ⚖️ Cần health checks và monitoring
 
 ---
 
 **Happy Dockering!** 🐳✈️
-

@@ -1,16 +1,28 @@
 # 🚀 Quick Start Guide - KeypicksVIVU
 
-> **Lưu ý quan trọng:** Dự án này CHỈ sử dụng Docker cho development. Tất cả services (app, MongoDB, Mongo Express) đều chạy trong Docker containers.
+> **Lưu ý quan trọng:** MongoDB và Mongo Express chạy trong Docker. App chạy locally trên máy của bạn.
+
+## ✨ What's New
+
+**Scripts thông minh hơn!** Giờ đây các quickstart scripts sẽ tự động:
+- 🔍 **Kiểm tra môi trường** (Node 24+, npm 10+, Docker)
+- 📦 **Cài đặt dependencies** nếu chưa có
+- 🚀 **Khởi động services** và đợi sẵn sàng
+- 🌱 **Seed database** (hỏi trước khi thực hiện)
+- ⚠️ **Báo lỗi rõ ràng** với hướng dẫn khắc phục
+
+➡️ **Bạn chỉ cần chạy `./quick-start.sh` và để script lo phần còn lại!**
 
 ## 📋 Yêu cầu hệ thống
 
+- **Node.js** 24.0.0+ ([Download](https://nodejs.org/))
+- **npm** 10.0.0+ (đi kèm với Node.js)
 - **Docker Engine** 20.10+ ([Cài đặt Docker](https://docs.docker.com/get-docker/))
 - **Docker Compose** 2.0+ (thường đi kèm với Docker Desktop)
-- **Make** (optional, để dùng Makefile commands)
+
+> **⚠️ Lưu ý:** Scripts sẽ tự động kiểm tra version và báo lỗi nếu không đúng yêu cầu.
 
 ## ⚡ Cách nhanh nhất để bắt đầu
-
-**Khuyến nghị: Sử dụng Init Script để setup tự động hoàn toàn!**
 
 ### 1️⃣ Clone Repository
 
@@ -19,58 +31,37 @@ git clone <repository-url>
 cd KeypicksVIVU
 ```
 
-### 2️⃣ Cấp quyền thực thi cho scripts (Linux/Mac)
-
-```bash
-# Cấp quyền execute cho các scripts
-chmod +x init.sh docker.sh quick-start.sh
-```
-
-> **Windows Users:** Không cần bước này. Có thể chạy trực tiếp `.ps1` files.
-
-### 3️⃣ Khởi động với Init Script - Một lệnh duy nhất! (Khuyến nghị)
+### 2️⃣ Chạy Quick Start Script
 
 **Linux/Mac:**
-
 ```bash
+chmod +x quick-start.sh
 ./quick-start.sh
 ```
 
 **Windows PowerShell:**
-
 ```powershell
 .\quick-start.ps1
 ```
 
 **Script này sẽ tự động:**
-
+- ✅ Kiểm tra **Node.js >= 24.0.0**
+- ✅ Kiểm tra **npm >= 10.0.0**
+- ✅ Kiểm tra **Docker & Docker Compose**
 - ✅ Tạo file `.env` từ `env.example` (nếu chưa có)
-- ✅ Build Docker images (nếu chưa có)
-- ✅ Khởi động MongoDB container với timezone UTC
-- ✅ Khởi động Mongo Express (Database Admin UI)
-- ✅ Khởi động App container với timezone UTC và hot-reload
-- ✅ Tự động seed dữ liệu mẫu (nếu database trống)
-- ✅ Hiển thị thông tin các services
+- ✅ **Cài đặt dependencies** (`npm install` nếu chưa có)
+- ✅ Khởi động MongoDB và Mongo Express containers
+- ✅ Đợi MongoDB sẵn sàng (auto health check)
+- ✅ **Hỏi có muốn seed database không**
 
-**Ví dụ output khi chạy script:**
+> **💡 Tip:** Script thông minh! Nó sẽ tự động kiểm tra và cài đặt mọi thứ bạn cần.
 
+```bash
+# Chạy app locally
+npm run dev
 ```
-🚀 Initializing KeypicksVIVU Development Environment
-====================================================
 
-✓ Creating .env file from env.example...
-✓ Building Docker images...
-✓ Starting MongoDB container...
-✓ Starting Mongo Express...
-✓ Starting App container...
-✓ Seeding sample data...
-
-✓ All services are running!
-
-Access points:
-  - App:           http://localhost:3000
-  - Mongo Express: http://localhost:8081
-```
+> **🔁 Mỗi lần làm việc**: Chỉ cần chạy `./quick-start.sh` để khởi động lại MongoDB, script sẽ tự động kiểm tra và cài dependencies nếu có thay đổi!
 
 ### 4️⃣ Truy cập ứng dụng
 
@@ -83,314 +74,318 @@ Access points:
 
 ---
 
-## 🔄 Phương pháp thay thế
+## 🔄 Workflow hàng ngày
 
-Nếu bạn muốn điều khiển chi tiết hơn hoặc không dùng Init script:
-
-### Sử dụng Docker Script (Điều khiển services riêng lẻ)
-
-**Khởi động development:**
+**Cách đơn giản nhất:**
 
 ```bash
-./docker.sh dev          # Linux/Mac
-.\docker.ps1 dev         # Windows
-```
+# 1. Khởi động tất cả (tự động kiểm tra dependencies)
+./quick-start.sh              # Linux/Mac
+.\quick-start.ps1             # Windows PowerShell
 
-**Dừng tất cả services:**
+# Script sẽ tự động:
+# - Kiểm tra Node 24, npm 10, Docker
+# - Cài đặt dependencies nếu chưa có
+# - Khởi động MongoDB & Mongo Express
+# - Hỏi có muốn seed database không
 
-```bash
-./docker.sh down         # Linux/Mac
-.\docker.ps1 down        # Windows
-```
+# 2. Chạy app
+npm run dev
 
-**Xem logs:**
+# 3. Làm việc với code...
 
-```bash
-./docker.sh logs         # Linux/Mac
-.\docker.ps1 logs        # Windows
-```
-
-**Rebuild containers:**
-
-```bash
-./docker.sh rebuild      # Linux/Mac
-.\docker.ps1 rebuild     # Windows
-```
-
-**Lưu ý:** Docker script không tự động tạo `.env` file. Bạn cần tạo thủ công từ `env.example`.
-
-### Sử dụng Makefile Commands
-
-```bash
-# Khởi động development environment
-make dev
-
-# Dừng tất cả containers
-make down
-
-# Xem logs
-make logs
-
-# Seed database
-make seed
-
-# Xem tất cả commands có sẵn
-make help
-```
-
-### Sử dụng Docker Compose trực tiếp
-
-```bash
-# Khởi động
-docker-compose up
-
-# Khởi động ở background
-docker-compose up -d
-
-# Xem logs
-docker-compose logs -f
-
-# Dừng
+# 4. Dừng MongoDB khi xong (optional)
 docker-compose down
 ```
 
-### Tìm hiểu thêm về Docker
+**Hoặc dùng Makefile:**
 
-Xem chi tiết đầy đủ về Docker setup, troubleshooting, và advanced commands tại:
+```bash
+make dev                      # Khởi động MongoDB & Mongo Express
+npm run dev                   # Chạy app
+```
 
-📚 **[DOCKER_GUIDE.md](./DOCKER_GUIDE.md)** - Hướng dẫn Docker chi tiết
+---
 
-**Lưu ý:**
+## 💡 Về Quick Start Script
 
-- Tất cả services chạy trong Docker với timezone UTC
-- **Datetime: BẮT BUỘC sử dụng ISO8601 format** (xem [DATETIME_GUIDE.md](./DATETIME_GUIDE.md))
+Script `quick-start.sh` / `quick-start.ps1` được thiết kế để **tự động hóa mọi thứ**:
+
+### Lần đầu tiên (First run):
+- ✅ Kiểm tra Node 24+, npm 10+, Docker
+- ✅ Tạo `.env` từ `env.example`
+- ✅ Cài đặt dependencies (`npm install`)
+- ✅ Khởi động MongoDB & Mongo Express
+- ✅ Hỏi có muốn seed database không
+
+### Các lần sau (Daily use):
+- ✅ Kiểm tra requirements vẫn OK
+- ✅ Cài đặt dependencies mới nếu có (auto-detect)
+- ✅ Khởi động MongoDB & Mongo Express
+- ✅ Hỏi có muốn seed lại không
+
+> **🎯 One script to rule them all!** Không cần phân biệt setup hay daily workflow - `quick-start.sh` lo hết!
 
 ---
 
 ## 📋 Các lệnh thường dùng
 
-### Init Scripts (Khuyến nghị cho lần đầu)
-
-**Khởi động lần đầu:**
+### Quản lý MongoDB
 
 ```bash
-./init.sh                # Linux/Mac
-.\init.ps1               # Windows
-```
+# Khởi động MongoDB và Mongo Express (Smart - tự động kiểm tra & cài đặt)
+./quick-start.sh                                      # Linux/Mac
+.\quick-start.ps1                                     # Windows PowerShell
+make dev                                              # Hoặc dùng Makefile
 
-**Khởi động nhanh (sau lần đầu):**
+# Dừng MongoDB (giữ data)
+docker-compose stop
 
-```bash
-./quick-start.sh         # Linux/Mac
-.\quick-start.ps1        # Windows
-```
+# Tắt MongoDB (xóa containers nhưng giữ data)
+docker-compose down
 
-### Docker Scripts (Điều khiển chi tiết hơn)
+# Xóa hoàn toàn (bao gồm volumes/data)
+docker-compose down -v
 
-**Khởi động development:**
+# Xem logs MongoDB
+docker-compose logs -f mongodb
 
-```bash
-./docker.sh dev          # Linux/Mac
-.\docker.ps1 dev         # Windows
-```
-
-**Dừng tất cả services:**
-
-```bash
-./docker.sh down         # Linux/Mac
-.\docker.ps1 down        # Windows
-```
-
-**Xem logs:**
-
-```bash
-./docker.sh logs         # Linux/Mac
-.\docker.ps1 logs        # Windows
-```
-
-**Rebuild containers:**
-
-```bash
-./docker.sh rebuild      # Linux/Mac
-.\docker.ps1 rebuild     # Windows
-```
-
-### Utilities
-
-```bash
-# Truy cập shell của app (để chạy npm commands, debug, etc)
-docker-compose exec app sh
+# Xem logs Mongo Express
+docker-compose logs -f mongo-express
 
 # Truy cập MongoDB shell
+make db-shell
+# hoặc
 docker-compose exec mongodb mongosh -u admin -p admin123 --authenticationDatabase admin
-
-# Kiểm tra health endpoint
-curl http://localhost:3000/api/health
-
-# Seed database
-docker-compose exec app npm run seed
-# Hoặc
-make seed
-
-# Xem resource usage (CPU, Memory)
-docker stats
-
-# Xem logs real-time
-docker-compose logs -f app
 ```
 
-**Lưu ý:**
+### Quản lý App
 
-- Không bao giờ sử dụng `localhost` để kết nối giữa các containers
-- Sử dụng service names (`mongodb`, `app`) trong Docker network
-- Tất cả containers chạy với timezone UTC
-- **Datetime: BẮT BUỘC sử dụng ISO8601 format** (Backend lưu Date objects, Frontend gửi/nhận ISO8601)
+```bash
+# Chạy app (development mode với hot reload)
+npm run dev
+
+# Chạy app (production mode)
+npm start
+
+# Build CSS
+npm run build:css
+
+# Watch CSS (auto-rebuild khi có thay đổi)
+npm run watch:css
+```
+
+### Database
+
+```bash
+# Seed dữ liệu mẫu
+npm run seed
+
+# Xóa tất cả dữ liệu
+npm run seed:clear
+
+# Backup database
+make db-backup
+
+# Restore database
+make db-restore FILE=backups/keypicksvivu_20251025_143022.dump
+```
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Docker Script Issues
-
-#### Script không có quyền thực thi (Linux/Mac)
+### Node.js hoặc npm version không đúng
 
 ```bash
-# Cấp quyền execute cho scripts
-chmod +x docker.sh init.sh quick-start.sh
-./docker.sh dev
+# Kiểm tra version hiện tại
+node -v                       # Phải >= 24.0.0
+npm -v                        # Phải >= 10.0.0
+
+# Cài đặt Node.js 24
+# Download từ: https://nodejs.org/
+
+# Hoặc dùng nvm (Node Version Manager)
+nvm install 24
+nvm use 24
+
+# Update npm
+npm install -g npm@latest
 ```
 
-#### PowerShell Execution Policy Error (Windows)
-
-```powershell
-# Cho phép chạy script trong session hiện tại
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-.\docker.ps1 dev
-```
-
-### Docker Container Issues
-
-#### Port đã được sử dụng
+### Dependencies không cài đặt được
 
 ```bash
-# Kiểm tra port 3000 hoặc 27017
-netstat -ano | findstr :3000  # Windows
-lsof -i :3000                  # Linux/Mac
+# Xóa node_modules và package-lock.json
+rm -rf node_modules package-lock.json    # Linux/Mac
+rmdir /s node_modules                    # Windows
+del package-lock.json                    # Windows
 
-# Dừng container đang dùng port
-docker ps  # Xem containers đang chạy
-docker stop <container_id>
+# Cài đặt lại
+npm install
 
-# Hoặc sửa port trong docker-compose.yml
-ports:
-  - "3001:3000"  # Đổi host port thành 3001
+# Hoặc dùng quick-start script (sẽ tự động cài đặt)
+./quick-start.sh                         # Linux/Mac
+.\quick-start.ps1                        # Windows
 ```
 
-#### Container không khởi động
+### MongoDB không kết nối được
 
 ```bash
-# Xem logs để debug
-docker-compose logs app
+# Kiểm tra MongoDB đang chạy
+docker ps
+
+# Xem logs MongoDB
 docker-compose logs mongodb
 
-# Rebuild từ đầu
-docker-compose down -v
-docker-compose up --build
-
-# Hoặc dùng script
-./docker.sh rebuild  # Linux/Mac
-.\docker.ps1 rebuild # Windows
-```
-
-#### MongoDB connection error
-
-```bash
-# Đảm bảo MongoDB đã khởi động hoàn toàn
-docker-compose logs mongodb | grep "Waiting for connections"
-
-# Restart MongoDB container
+# Restart MongoDB
 docker-compose restart mongodb
 
-# Đợi vài giây rồi restart app
-sleep 5
-docker-compose restart app
-
-# Test kết nối từ app container
-docker-compose exec app sh -c "ping -c 2 mongodb"
+# Kiểm tra connection string trong .env
+# Phải là: mongodb://admin:admin123@localhost:27017/keypicksvivu?authSource=admin
 ```
 
-#### Hot reload không hoạt động (code thay đổi nhưng không tự động restart)
+### App không khởi động
 
 ```bash
-# Trên Windows, có thể cần bật polling
-# Kiểm tra file package.json có nodemonConfig với legacyWatch: true
+# Kiểm tra file .env tồn tại
+cat .env
 
-# Hoặc restart container thủ công
-docker-compose restart app
+# Nếu chưa có, tạo từ template
+cp env.example .env
+
+# Kiểm tra dependencies
+npm install
+
+# Xem lỗi chi tiết
+npm run dev
 ```
 
-#### Disk space đầy hoặc Docker chạy chậm
+### Port 3000 đã được sử dụng
 
 ```bash
-# Dọn dẹp unused containers, images, volumes
-docker system prune -a
+# Kiểm tra process đang dùng port
+# Windows
+netstat -ano | findstr :3000
+# Linux/Mac
+lsof -i :3000
 
-# Xem disk usage
-docker system df
-
-# Xóa unused volumes (cẩn thận: sẽ mất data!)
-docker volume prune
+# Kill process hoặc đổi port trong .env
+PORT=3001
 ```
 
-#### Timezone không đúng
+### Docker không chạy
 
 ```bash
-# Kiểm tra timezone trong containers
-docker-compose exec app date
-docker-compose exec mongodb date
+# Kiểm tra Docker Desktop đang chạy
+docker --version
 
-# Cả hai phải hiển thị UTC
-# Nếu không đúng, rebuild containers
-docker-compose down
-docker-compose up --build
+# Khởi động Docker Desktop nếu chưa chạy
 ```
 
-### Docker Installation Issues
+### "make: command not found"
 
-#### Docker không được cài đặt
-
-- **Windows/Mac:** Cài đặt [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- **Linux:**
-  ```bash
-  # Ubuntu/Debian
-  curl -fsSL https://get.docker.com -o get-docker.sh
-  sudo sh get-docker.sh
-  ```
-
-#### Docker Compose không tìm thấy
+Nếu không có `make`, dùng commands trực tiếp:
 
 ```bash
-# Kiểm tra version
-docker compose version  # Docker Compose V2 (built-in)
-docker-compose version  # Docker Compose V1 (standalone)
+# Thay vì: make dev
+docker-compose up -d mongodb mongo-express
 
-# Nếu dùng V2, thay 'docker-compose' bằng 'docker compose' (có space)
-docker compose up
+# Thay vì: make db-shell
+docker-compose exec mongodb mongosh -u admin -p admin123 --authenticationDatabase admin
 ```
 
-### Cần thêm trợ giúp?
+---
 
-Xem hướng dẫn chi tiết tại:
+## 📝 Common Scenarios
 
-- 📚 **[DOCKER_GUIDE.md](./DOCKER_GUIDE.md)** - Docker troubleshooting đầy đủ
-- 📚 **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** - Development best practices
-- 📅 **[DATETIME_GUIDE.md](./DATETIME_GUIDE.md)** - Datetime & timezone handling
+### Scenario 1: Mới clone project lần đầu
+```bash
+# 1. Clone và vào thư mục
+git clone <repository-url>
+cd KeypicksVIVU
+
+# 2. Chạy quick-start script
+chmod +x quick-start.sh
+./quick-start.sh       # Linux/Mac
+.\quick-start.ps1      # Windows
+
+# Script sẽ làm mọi thứ: check, install, start, seed
+
+# 3. Chạy app
+npm run dev
+
+# Done! 🎉
+```
+
+### Scenario 2: Làm việc hàng ngày
+```bash
+# 1. Mở terminal và vào project
+cd KeypicksVIVU
+
+# 2. Chạy quick-start (tự động check & start)
+./quick-start.sh       # Linux/Mac
+.\quick-start.ps1      # Windows
+
+# Script sẽ kiểm tra mọi thứ và khởi động
+
+# 3. Chạy app
+npm run dev
+
+# 4. Code away! 💻
+```
+
+### Scenario 3: Sau khi pull code mới
+```bash
+# 1. Pull code
+git pull
+
+# 2. Chạy quick-start (sẽ tự động cài dependencies mới nếu có)
+./quick-start.sh       # Linux/Mac
+
+# 3. Rebuild CSS nếu có thay đổi
+npm run build:css
+
+# 4. Chạy app
+npm run dev
+```
+
+### Scenario 4: Reset database
+```bash
+# 1. Dừng và xóa containers + data
+docker-compose down -v
+
+# 2. Chạy lại quick-start
+./quick-start.sh
+
+# 3. Seed database
+npm run seed
+
+# Database mới tinh! 🌱
+```
+
+### Scenario 5: Chuyển máy/Setup môi trường mới
+```bash
+# 1. Cài đặt requirements
+# - Node.js 24+ (https://nodejs.org/)
+# - Docker Desktop (https://docker.com/)
+
+# 2. Clone project
+git clone <repository-url>
+cd KeypicksVIVU
+
+# 3. Chạy quick-start script
+./quick-start.sh       # Linux/Mac
+.\quick-start.ps1      # Windows
+
+# Done! Script sẽ lo hết!
+```
 
 ---
 
 ## 🎯 Next Steps
 
-Sau khi khởi động thành công với Docker, bạn có thể:
+Sau khi khởi động thành công, bạn có thể:
 
 1. ✅ **Kiểm tra ứng dụng:** http://localhost:3000
 2. 📖 **Test API health endpoint:**
@@ -399,19 +394,18 @@ Sau khi khởi động thành công với Docker, bạn có thể:
    ```
 3. 📊 **Xem database qua Mongo Express:** http://localhost:8081
    - Username: `admin` / Password: `admin123`
-4. 🔐 **Test authentication endpoints** (xem `routes/auth.js`)
-5. 🎨 **Customize UI** trong folder `ui/`
-6. 🛠️ **Seed dữ liệu mẫu:**
+4. 🌱 **Seed dữ liệu mẫu** (nếu chưa seed):
    ```bash
-   make seed
-   # Hoặc
-   docker-compose exec app npm run seed
+   npm run seed
    ```
+   > **💡 Tip:** Quick-start script đã hỏi bạn về việc seed. Nếu bạn chọn "No", chạy lệnh trên để seed lại.
+5. 🔐 **Test authentication endpoints** (xem `routes/auth.js`)
+6. 🎨 **Customize UI** trong folder `ui/`
 7. 📚 **Đọc thêm documentation:**
    - [README.md](../README.md) - Tổng quan dự án
-   - [DOCKER_GUIDE.md](./DOCKER_GUIDE.md) - Docker chi tiết
    - [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) - Development guide
    - [DATETIME_GUIDE.md](./DATETIME_GUIDE.md) - Datetime & timezone handling
+   - [DATABASE_COMMANDS_GUIDE.md](./DATABASE_COMMANDS_GUIDE.md) - MongoDB commands
 8. 🚀 **Deploy to production** (xem [DEPLOYMENT.md](./DEPLOYMENT.md))
 
 ---
@@ -419,10 +413,10 @@ Sau khi khởi động thành công với Docker, bạn có thể:
 ## 📚 Tài liệu liên quan
 
 - **[README.md](../README.md)** - Tổng quan dự án và kiến trúc
-- **[DOCKER_GUIDE.md](./DOCKER_GUIDE.md)** - Hướng dẫn Docker chi tiết, troubleshooting
 - **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** - Best practices cho development
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Hướng dẫn deploy production
-- **[DATETIME_GUIDE.md](./DATETIME_GUIDE.md)** - Xử lý datetime và timezone (UTC/Asia/Ho_Chi_Minh)
+- **[DATETIME_GUIDE.md](./DATETIME_GUIDE.md)** - Xử lý datetime và timezone
 - **[DATABASE_COMMANDS_GUIDE.md](./DATABASE_COMMANDS_GUIDE.md)** - MongoDB commands
+- **[SETUP_DATABASE.md](./SETUP_DATABASE.md)** - Database setup chi tiết
 
 Happy coding! ✈️

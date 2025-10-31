@@ -19,7 +19,7 @@
       ],
       // VS Code settings
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.defaultProfile.linux": "zsh",
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "javascript.updateImportsOnFileMove.enabled": "always",
@@ -55,15 +55,9 @@
     }
   },
 
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "npm install",
-
-  // Use 'postStartCommand' to run commands after the container starts.
-  // "postStartCommand": "npm run seed",
-
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "node",
 
-  // Enable debugging
-  "runArgs": ["--init"]
+  // Tắt auto-restart container khi rebuild để tránh lỗi OOM
+  "shutdownAction": "stopContainer"
 }

@@ -26,133 +26,88 @@ Hệ thống đặt vé máy bay trực tuyến
 
 ## 🚀 Khởi động nhanh
 
-### 🐳 Docker-First Development (Khuyến nghị)
+Chỉ cần chọn 1 trong 2 cách sau để bắt đầu:
 
-**Dự án được thiết kế để chạy hoàn toàn trong Docker environment:**
+### Option 1: Quick Start Script (Khuyến nghị) ⚡
 
-- ✅ **Timezone**: UTC trong tất cả containers (MongoDB & Express server)
-- ✅ **Seed Data**: Tự động convert từ Asia/Ho_Chi_Minh (UTC+7) sang UTC
-- ✅ **Network**: Containers sử dụng service names (`mongodb`, `app`) - không dùng localhost
-- ✅ **Consistency**: Đảm bảo môi trường dev giống production
-
-#### Setup lần đầu
-
-Chạy script tự động setup:
+Script tự động setup mọi thứ chỉ với 1 lệnh!
 
 ```bash
 # Linux/Mac
-./init.sh
+chmod +x quick-start.sh
+./quick-start.sh
 
 # Windows PowerShell
-.\init.ps1
+.\quick-start.ps1
 ```
 
-Script sẽ tự động:
+**Script sẽ tự động:**
+- ✅ Kiểm tra Node.js 24+, npm 10+, Docker
+- ✅ Tạo file `.env` từ `env.example`
+- ✅ Cài đặt dependencies
+- ✅ Khởi động MongoDB và Mongo Express
+- ✅ Seed database (nếu bạn chọn Yes)
 
-- ✅ Kiểm tra Docker installation
-- ✅ Tạo file `.env`
-- ✅ Pull và build Docker images với timezone UTC
-- ✅ Khởi động services (nếu bạn chọn)
-- ✅ Seed database với Vietnam timezone data (tự động convert sang UTC)
-- ✅ Build Tailwind CSS locally
-
-> **💡 Lưu ý CSS**: Website sử dụng Tailwind CSS và Font Awesome được host locally (không dùng CDN). Nếu bạn chỉnh sửa HTML/CSS, chạy `npm run build:css` để rebuild. Xem [CSS Build Guide](docs/CSS_BUILD_GUIDE.md) để biết thêm chi tiết.
-
-#### Development Commands
-
+**Sau khi script chạy xong:**
 ```bash
-# Khởi động tất cả services (app + MongoDB + Mongo Express)
-docker-compose up
-
-# Hoặc dùng Makefile
-make dev
-
-# Seed database (Vietnam timezone → UTC)
-make seed
-
-# Kiểm tra timezone
-make timezone
+npm run dev
 ```
 
-**Truy cập từ host machine:**
+### Option 2: DevContainer (VS Code) 🐳
 
-- Ứng dụng: http://localhost:3000
-- Mongo Express (DB Admin): http://localhost:8081
+Nếu bạn dùng VS Code, mở project và chọn **"Reopen in Container"** khi được hỏi.
+
+DevContainer sẽ tự động:
+- ✅ Setup toàn bộ môi trường development
+- ✅ Cài đặt Node.js, MongoDB
+- ✅ Cài đặt dependencies
+- ✅ Sẵn sàng code ngay!
+
+---
+
+### Truy cập ứng dụng
+
+- **App**: http://localhost:3000
+- **Mongo Express** (Database UI): http://localhost:8081
   - Username: `admin`
   - Password: `admin123`
 
-**Lưu ý**: Chỉ truy cập từ host machine qua localhost. Bên trong containers, services kết nối với nhau qua service names (`mongodb`, `app`).
+> **💡 Lưu ý CSS**: Website sử dụng Tailwind CSS và Font Awesome được host locally. Nếu chỉnh sửa HTML/CSS, chạy `npm run build:css`. Xem [CSS Build Guide](docs/CSS_BUILD_GUIDE.md) để biết thêm chi tiết.
 
-#### 🐞 DevContainer & Debugging (VS Code)
-
-**Khuyến nghị cho debugging và development trong VS Code:**
-
-DevContainer cho phép bạn phát triển trong một container Docker được cấu hình sẵn với tất cả tools và extensions cần thiết.
-
-**Setup:**
-
-1. Cài đặt extension **Dev Containers** trong VS Code
-2. Nhấn `F1` > **Dev Containers: Reopen in Container**
-3. Đợi container khởi động (lần đầu mất vài phút)
-
-**Tính năng:**
-
-- ✅ Auto-install extensions (ESLint, Prettier, MongoDB, Docker, Tailwind CSS)
-- ✅ Full debugging support với breakpoints
-- ✅ Hot reload với nodemon
-- ✅ MongoDB integration trực tiếp trong VS Code
-- ✅ VS Code tasks (Start Server, Seed DB, Build CSS, etc.)
-
-**Debug:**
-
-- Nhấn `F5` để start debugging
-- Chọn **Debug Express with Nodemon** (recommended)
-- Đặt breakpoints bằng cách click vào lề bên trái
-- Debug console, watch variables, call stack đầy đủ
-
-📖 **Xem thêm**: [Development Guide - DevContainer Section](docs/DEVELOPMENT_GUIDE.md#-devcontainer-setup-recommended-for-debugging)
-
-#### Production
-
-```bash
-# Khởi động production environment
-docker-compose -f docker-compose.prod.yml up -d
-
-# Hoặc dùng Makefile
-make prod
-```
-
-📖 **Xem thêm**: [Hướng dẫn Docker](docs/DOCKER_GUIDE.md) và [Development Guide](docs/DEVELOPMENT_GUIDE.md)
+📖 **Xem thêm**: [Quick Start Guide](docs/QUICKSTART.md) và [Development Guide](docs/DEVELOPMENT_GUIDE.md)
 
 ## 📁 Cấu trúc dự án
 
 ```
 KeypicksVIVU/
-├── config/              # Cấu hình ứng dụng
-├── middleware/          # Express middlewares
-├── models/              # MongoDB models
-├── routes/              # API routes
-├── scripts/             # Utility scripts (seed data, etc.)
-├── docs/                # Tài liệu hướng dẫn
-├── ui/                  # Frontend files
-│   ├── css/             # Stylesheets (Tailwind, Font Awesome, custom)
-│   │   ├── tailwind.css        # Built Tailwind CSS (generated)
-│   │   ├── tailwind-input.css  # Tailwind source file
-│   │   ├── fontawesome.min.css # Font Awesome (local)
+├── config/                    # Cấu hình ứng dụng
+├── middleware/                # Express middlewares
+├── models/                    # MongoDB models
+├── routes/                    # API routes
+├── scripts/                   # Utility scripts (seed data, etc.)
+├── docs/                      # Tài liệu hướng dẫn
+├── ui/                        # Frontend files
+│   ├── css/                   # Stylesheets (Tailwind, Font Awesome, custom)
+│   │   ├── tailwind.css              # Built Tailwind CSS (generated)
+│   │   ├── tailwind-input.css        # Tailwind source file
+│   │   ├── fontawesome.min.css       # Font Awesome (local)
 │   │   ├── animations.css
 │   │   ├── components.css
 │   │   ├── pages.css
 │   │   └── responsive.css
-│   ├── fonts/           # Font Awesome fonts (local)
-│   ├── js/              # JavaScript files
-│   ├── pages/           # HTML pages
-│   └── img/             # Images and assets
-├── server.js            # Entry point
-├── tailwind.config.js   # Tailwind CSS configuration
-├── Dockerfile           # Production Docker image
-├── Dockerfile.dev       # Development Docker image
-├── docker-compose.yml   # Dev environment
-└── docker-compose.prod.yml # Production environment
+│   ├── fonts/                 # Font Awesome fonts (local)
+│   ├── js/                    # JavaScript files
+│   ├── pages/                 # HTML pages
+│   └── img/                   # Images and assets
+├── server.js                  # Entry point
+├── tailwind.config.js         # Tailwind CSS configuration
+├── docker-compose.yml         # MongoDB & Mongo Express containers
+├── docker-compose.prod.yml    # Production environment
+├── Dockerfile                 # Production Docker image
+├── .devcontainer/             # VS Code DevContainer config (nếu cần)
+│   └── devcontainer.json
+├── quick-start.sh             # Quick start script (Linux/Mac)
+└── quick-start.ps1            # Quick start script (Windows)
 ```
 
 ## 🔧 Scripts
@@ -160,8 +115,9 @@ KeypicksVIVU/
 ### Backend
 
 - `npm start` - Khởi động production server
-- `npm run dev` - Khởi động development server với hot reload
-- `npm run seed` - Seed database với dữ liệu mẫu
+- `npm run dev` - Khởi động development server với hot reload (chạy locally)
+- `npm run seed` - Seed database với dữ liệu mẫu (chạy locally)
+- `npm run seed:clear` - Xóa toàn bộ dữ liệu trong database
 
 ### Frontend (CSS)
 
@@ -209,41 +165,32 @@ File `.env` được tự động tạo từ `env.example`. Các biến quan tr�
 # Node Environment
 NODE_ENV=development
 PORT=3000
-TZ=UTC  # Timezone UTC cho consistency
 
-# MongoDB - Sử dụng Docker service name
-MONGODB_URI=mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin
+# MongoDB - Kết nối qua localhost (Docker expose port 27017)
+MONGODB_URI=mongodb://admin:admin123@localhost:27017/keypicksvivu?authSource=admin
 
 # JWT Authentication
 JWT_SECRET=your-dev-jwt-secret-key-change-in-production
 JWT_EXPIRE=7d
 
-# API - Relative path cho Docker environment
-API_BASE_URL=/api
+# API Configuration
+API_BASE_URL=http://localhost:3000/api
 ```
 
 **⚠️ Lưu ý quan trọng:**
 
-- Không dùng `localhost` trong MONGODB_URI - sử dụng service name `mongodb`
-- Timezone luôn là `UTC` trong containers
+- App chạy locally, kết nối MongoDB qua `localhost:27017`
+- MongoDB credentials: `admin` / `admin123` (chỉ dùng cho development)
 - **Datetime: BẮT BUỘC sử dụng ISO8601 format** (xem [DATETIME_GUIDE.md](docs/DATETIME_GUIDE.md))
 
-## 🐳 Docker Architecture
+## 🏗️ Development Architecture
 
-Dự án được thiết kế **Docker-first** với các đặc điểm:
+### Setup Development
 
-### Docker Images
-
-- **Dockerfile** - Production-ready image với multi-stage build
-- **Dockerfile.dev** - Development image với hot reload và timezone UTC
-
-### Docker Compose
-
-- **docker-compose.yml** - Development environment:
-  - 🚀 Express App (Node 24 Alpine, timezone UTC)
-  - 🗄️ MongoDB 7.0 (timezone UTC)
-  - 🖥️ Mongo Express (Database UI)
-- **docker-compose.prod.yml** - Production environment
+- **MongoDB**: Chạy trong Docker container, expose port `27017`
+- **Mongo Express**: Chạy trong Docker container, port `8081`
+- **App**: Chạy locally trên máy của bạn, port `3000`
+- **Connection**: App kết nối MongoDB qua `localhost:27017`
 
 ### Datetime Strategy
 
@@ -251,19 +198,10 @@ Dự án được thiết kế **Docker-first** với các đặc điểm:
 - **Backend**: Lưu Date objects, middleware tự động serialize → ISO8601
 - **Frontend**: Gửi ISO8601, nhận ISO8601, dùng Utils functions để format
 - **Database**: Lưu trữ timestamps ở UTC
-- **Benefits**:
-  - Đơn giản, chuẩn quốc tế
-  - Tự động xử lý bởi middleware
-  - Không có timezone bugs
 
 Xem chi tiết: [DATETIME_GUIDE.md](docs/DATETIME_GUIDE.md)
 
-### Network Architecture
-
-- **Internal**: Containers kết nối qua service names (`mongodb`, `app`)
-- **External**: Host machine truy cập qua `localhost:3000`, `localhost:8081`
-
-Xem [Hướng dẫn Docker](docs/DOCKER_GUIDE.md) và [Setup Database](docs/SETUP_DATABASE.md) để biết chi tiết.
+📖 **Tài liệu deployment**: [DEPLOYMENT.md](docs/DEPLOYMENT.md) | [Setup Database](docs/SETUP_DATABASE.md)
 
 ## 📝 License
 

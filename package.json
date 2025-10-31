@@ -42,8 +42,10 @@
   "nodemonConfig": {
     "watch": [
       "server.js",
-      "src/",
-      "config/"
+      "config/",
+      "middleware/",
+      "models/",
+      "routes/"
     ],
     "ext": "js,json,html,css,ejs"
   }
