@@ -1,0 +1,23 @@
+# Development Dockerfile
+FROM node:24-alpine
+
+WORKDIR /app
+
+# Change ownership of /app to node user
+RUN chown -R node:node /app
+
+# Create .profile for node user to prevent zsh errors
+RUN touch /home/node/.profile && \
+    chown node:node /home/node/.profile
+
+# Switch to node user
+USER node
+
+ENV NODE_ENV=development
+ENV PORT=3000
+
+EXPOSE 3000
+
+# Default command - will be overridden by docker-compose
+CMD ["npm", "run", "dev"]
+

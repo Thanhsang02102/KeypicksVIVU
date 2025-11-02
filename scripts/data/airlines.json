@@ -1,0 +1,33 @@
+{
+    "airlines": [
+        {
+            "code": "VN",
+            "name": "Vietnam Airlines",
+            "logo": "/img/airlines/vn.png",
+            "country": "Vietnam",
+            "website": "https://www.vietnamairlines.com"
+        },
+        {
+            "code": "VJ",
+            "name": "VietJet Air",
+            "logo": "/img/airlines/vj.png",
+            "country": "Vietnam",
+            "website": "https://www.vietjetair.com"
+        },
+        {
+            "code": "QH",
+            "name": "Bamboo Airways",
+            "logo": "/img/airlines/qh.png",
+            "country": "Vietnam",
+            "website": "https://www.bambooairways.com"
+        },
+        {
+            "code": "BL",
+            "name": "Pacific Airlines",
+            "logo": "/img/airlines/bl.png",
+            "country": "Vietnam",
+            "website": "https://www.pacificairlines.com"
+        }
+    ]
+}
+

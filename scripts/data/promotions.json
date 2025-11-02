@@ -1,0 +1,39 @@
+{
+    "promotions": [
+        {
+            "id": "PROMO001",
+            "title": "Giảm 50% vé máy bay",
+            "description": "Áp dụng cho tất cả tuyến bay nội địa",
+            "discount": 50,
+            "type": "percentage",
+            "startDate": "2024-12-15",
+            "endDate": "2024-12-31",
+            "image": "/images/promotions/promo1.jpg",
+            "active": true
+        },
+        {
+            "id": "PROMO002",
+            "title": "Combo du lịch",
+            "description": "Vé máy bay + Khách sạn",
+            "discount": 30,
+            "type": "percentage",
+            "startDate": "2024-12-01",
+            "endDate": "2025-01-31",
+            "image": "/images/promotions/promo2.jpg",
+            "active": true
+        },
+        {
+            "id": "PROMO003",
+            "title": "Vé tháng",
+            "description": "Bay không giới hạn trong 1 tháng",
+            "discount": 0,
+            "type": "fixed",
+            "price": 15000000,
+            "startDate": "2024-12-01",
+            "endDate": "2024-12-31",
+            "image": "/images/promotions/promo3.jpg",
+            "active": true
+        }
+    ]
+}
+

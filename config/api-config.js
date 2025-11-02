@@ -1,7 +1,8 @@
 module.exports = {
     // API Configuration
     API_VERSION: 'v1',
-    BASE_URL: process.env.API_BASE_URL || 'http://localhost:3000/api',
+    // Use relative URL for Docker environment - no localhost
+    BASE_URL: process.env.API_BASE_URL || '/api',
 
     // External APIs
     FLIGHT_API: {

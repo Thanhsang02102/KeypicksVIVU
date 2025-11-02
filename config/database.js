@@ -2,12 +2,16 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/keypicksvivu', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        // Use MONGODB_URI from environment, fallback to Docker service name
+        const mongoUri = process.env.MONGODB_URI || 'mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin';
+
+        const conn = await mongoose.connect(mongoUri);
 
         console.log(`MongoDB Connected: ${conn.connection.host}`);
+        console.log(`Database: ${conn.connection.name}`);
+        console.log(
+            `Server Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone || process.env.TZ || 'System default'}`
+        );
     } catch (error) {
         console.error('Database connection error:', error);
         process.exit(1);

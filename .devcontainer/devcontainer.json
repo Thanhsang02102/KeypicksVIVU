@@ -1,0 +1,63 @@
+{
+  "name": "KeypicksVIVU Development",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      // VS Code extensions to install
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "mongodb.mongodb-vscode",
+        "ms-azuretools.vscode-docker",
+        "bradlc.vscode-tailwindcss",
+        "christian-kohler.path-intellisense",
+        "PKief.material-icon-theme"
+      ],
+      // VS Code settings
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "javascript.updateImportsOnFileMove.enabled": "always",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        }
+      }
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [3000, 27017, 8081],
+  "portsAttributes": {
+    "3000": {
+      "label": "Express Server",
+      "onAutoForward": "notify"
+    },
+    "27017": {
+      "label": "MongoDB"
+    },
+    "8081": {
+      "label": "Mongo Express"
+    }
+  },
+
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
+    }
+  },
+
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "node",
+
+  // Tắt auto-restart container khi rebuild để tránh lỗi OOM
+  "shutdownAction": "stopContainer"
+}

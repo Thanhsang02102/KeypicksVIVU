@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài đặt tài khoản - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../img/logo.png" alt="Logo" class="h-12">
+                        <span class="ml-4 text-2xl font-bold vna-text-primary">KeyPicks VIVU</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html" class="text-gray-600 hover:text-blue-700">Trang chủ</a>
+                    <a href="flight-schedule.html" class="text-gray-600 hover:text-blue-700">Lịch bay</a>
+                    <a href="promotions.html" class="text-gray-600 hover:text-blue-700">Khuyến mãi</a>
+                    <a href="services.html" class="text-gray-600 hover:text-blue-700">Dịch vụ</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="profile.html" class="vna-text-primary">Tài khoản</a>
+                    <a href="login.html" class="vna-primary text-white px-4 py-2 rounded">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-10">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user text-blue-500 text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg">Nguyễn Văn A</h3>
+                        <p class="text-sm text-gray-600">user@example.com</p>
+                    </div>
+
+                    <nav class="space-y-2">
+                        <a href="profile.html" class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-user mr-3"></i>
+                            Thông tin cá nhân
+                        </a>
+                        <a href="my-bookings.html"
+                            class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-ticket-alt mr-3"></i>
+                            Đặt vé của tôi
+                        </a>
+                        <a href="booking-history.html"
+                            class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-history mr-3"></i>
+                            Lịch sử đặt vé
+                        </a>
+                        <a href="account-settings.html"
+                            class="flex items-center p-3 bg-blue-50 text-blue-600 rounded-md">
+                            <i class="fas fa-cog mr-3"></i>
+                            Cài đặt tài khoản
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <div class="space-y-6">
+                    <!-- Change Password -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-bold mb-4 vna-text-primary">Đổi mật khẩu</h2>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu hiện tại</label>
+                                <input type="password"
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
+                                <input type="password"
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu
+                                    mới</label>
+                                <input type="password"
+                                    class="w-full border border-gray-300 rounded-md p-3 focus:ring-vna-primary focus:border-vna-primary">
+                            </div>
+                            <button type="submit"
+                                class="vna-primary text-white px-6 py-3 rounded-md hover:bg-blue-800 transition-colors">
+                                Đổi mật khẩu
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-bold mb-4 vna-text-primary">Cài đặt thông báo</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold">Email thông báo</h3>
+                                    <p class="text-sm text-gray-600">Nhận thông báo qua email</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold">SMS thông báo</h3>
+                                    <p class="text-sm text-gray-600">Nhận thông báo qua SMS</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold">Thông báo khuyến mãi</h3>
+                                    <p class="text-sm text-gray-600">Nhận thông tin về khuyến mãi</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-bold mb-4 vna-text-primary">Cài đặt riêng tư</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold">Chia sẻ thông tin</h3>
+                                    <p class="text-sm text-gray-600">Cho phép chia sẻ thông tin với đối tác</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold">Hiển thị trạng thái online</h3>
+                                    <p class="text-sm text-gray-600">Cho phép người khác thấy bạn đang online</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Account -->
+                    <div class="bg-red-50 border border-red-200 p-6 rounded-lg">
+                        <h2 class="text-xl font-bold mb-4 text-red-800">Xóa tài khoản</h2>
+                        <p class="text-red-600 mb-4">Xóa tài khoản sẽ xóa vĩnh viễn tất cả dữ liệu của bạn. Hành động
+                            này không thể hoàn tác.</p>
+                        <button class="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition-colors">
+                            Xóa tài khoản
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Express Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "3000",
+        "TZ": "UTC",
+        "MONGODB_URI": "mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin",
+        "JWT_SECRET": "your-dev-jwt-secret-key-change-in-production",
+        "JWT_EXPIRE": "7d"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Debug Express with Nodemon",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/server.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "3000",
+        "TZ": "UTC",
+        "MONGODB_URI": "mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin",
+        "JWT_SECRET": "your-dev-jwt-secret-key-change-in-production",
+        "JWT_EXPIRE": "7d"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Attach to Process",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Debug Seed Script",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/seed.js",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development",
+        "TZ": "UTC",
+        "MONGODB_URI": "mongodb://admin:admin123@mongodb:27017/keypicksvivu?authSource=admin"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}
+

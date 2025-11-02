@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khuyến mãi - KeyPicks VIVU</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .vna-primary {
+            background-color: #0B4F9A;
+        }
+
+        .vna-text-primary {
+            color: #0B4F9A;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../img/logo.png" alt="Logo" class="h-12">
+                        <span class="ml-4 text-2xl font-bold vna-text-primary">KeyPicks VIVU</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html" class="text-gray-600 hover:text-blue-700">Trang chủ</a>
+                    <a href="flight-schedule.html" class="text-gray-600 hover:text-blue-700">Lịch bay</a>
+                    <a href="promotions.html" class="vna-text-primary">Khuyến mãi</a>
+                    <a href="services.html" class="text-gray-600 hover:text-blue-700">Dịch vụ</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-700">Đăng nhập</a>
+                    <a href="register.html" class="vna-primary text-white px-4 py-2 rounded">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-10">
+        <div class="bg-white p-6 rounded-lg shadow-xl">
+            <h1 class="text-3xl font-bold mb-6 vna-text-primary">Khuyến mãi hấp dẫn</h1>
+
+            <!-- Featured Promotion -->
+            <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-8 rounded-lg mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2">Giảm 50% vé máy bay</h2>
+                        <p class="text-lg mb-4">Áp dụng cho tất cả tuyến bay nội địa</p>
+                        <p class="text-sm opacity-90">Từ 15/12/2024 - 31/12/2024</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-4xl font-bold">50%</div>
+                        <div class="text-sm opacity-90">OFF</div>
+                    </div>
+                </div>
+                <button
+                    class="bg-white text-red-500 px-6 py-3 rounded-lg font-semibold mt-4 hover:bg-gray-100 transition-colors">
+                    Đặt vé ngay
+                </button>
+            </div>
+
+            <!-- Promotions Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Promotion 1 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="bg-blue-500 text-white p-4">
+                        <h3 class="text-xl font-bold">Combo du lịch</h3>
+                        <p class="text-sm opacity-90">Vé máy bay + Khách sạn</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Tiết
+                                kiệm 30%</span>
+                            <span class="text-2xl font-bold text-red-600">2,500,000₫</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Bao gồm vé máy bay khứ hồi + 2 đêm khách sạn 3 sao</p>
+                        <button
+                            class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Promotion 2 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="bg-green-500 text-white p-4">
+                        <h3 class="text-xl font-bold">Vé tháng</h3>
+                        <p class="text-sm opacity-90">Bay không giới hạn</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">Hot</span>
+                            <span class="text-2xl font-bold text-red-600">15,000,000₫</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Bay không giới hạn trong 1 tháng</p>
+                        <button
+                            class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Promotion 3 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="bg-purple-500 text-white p-4">
+                        <h3 class="text-xl font-bold">Đi theo nhóm</h3>
+                        <p class="text-sm opacity-90">Từ 5 người trở lên</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Giảm
+                                20%</span>
+                            <span class="text-2xl font-bold text-red-600">1,480,000₫</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Giá vé cho nhóm từ 5 người trở lên</p>
+                        <button
+                            class="w-full bg-purple-500 text-white py-2 rounded-md hover:bg-purple-600 transition-colors">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Promotion 4 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="bg-orange-500 text-white p-4">
+                        <h3 class="text-xl font-bold">Sinh nhật</h3>
+                        <p class="text-sm opacity-90">Ưu đãi đặc biệt</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-semibold">Đặc
+                                biệt</span>
+                            <span class="text-2xl font-bold text-red-600">1,200,000₫</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Giảm 35% cho khách hàng sinh nhật</p>
+                        <button
+                            class="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Promotion 5 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="bg-teal-500 text-white p-4">
+                        <h3 class="text-xl font-bold">Học sinh - Sinh viên</h3>
+                        <p class="text-sm opacity-90">Giá ưu đãi</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Giảm
+                                25%</span>
+                            <span class="text-2xl font-bold text-red-600">1,387,500₫</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Dành cho học sinh, sinh viên</p>
+                        <button
+                            class="w-full bg-teal-500 text-white py-2 rounded-md hover:bg-teal-600 transition-colors">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Promotion 6 -->
+                <div
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="bg-indigo-500 text-white p-4">
+                        <h3 class="text-xl font-bold">Đặt sớm</h3>
+                        <p class="text-sm opacity-90">Trước 30 ngày</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">Tiết
+                                kiệm</span>
+                            <span class="text-2xl font-bold text-red-600">1,295,000₫</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Giảm 30% khi đặt vé trước 30 ngày</p>
+                        <button
+                            class="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 transition-colors">
+                            Xem chi tiết
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-50 p-8 rounded-lg mt-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">Đăng ký nhận thông tin khuyến mãi</h3>
+                <p class="text-gray-600 mb-6">Nhận thông tin về các chương trình khuyến mãi mới nhất</p>
+                <form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Nhập email của bạn"
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:ring-vna-primary focus:border-vna-primary">
+                    <button type="submit"
+                        class="vna-primary text-white px-6 py-3 rounded-md hover:bg-blue-800 transition-colors">
+                        Đăng ký
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+</body>
+
+</html>
